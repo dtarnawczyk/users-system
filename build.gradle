@@ -1,13 +1,11 @@
-
 plugins {
     id 'org.springframework.boot' version '1.5.3.RELEASE'
 }
 
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'spring-boot'
 
-group = 'org.users.system'
+group = 'org.customers.system'
 version = '0.0.1'
 
 repositories {
@@ -23,11 +21,14 @@ tasks.withType(JavaCompile) {
 }
 
 war {
-    baseName = 'org.users.system'
+    baseName = 'org.customers.system'
     version =  '0.0.1'
 }
 
 dependencies {
     compile ('org.springframework.boot:spring-boot-starter-web')
     compile ('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile ('org.springframework.boot:spring-boot-devtools')
+    compile ('org.springframework.boot:spring-boot-starter-data-jpa')
+    runtime ('com.h2database:h2:1.4.193')
 }
