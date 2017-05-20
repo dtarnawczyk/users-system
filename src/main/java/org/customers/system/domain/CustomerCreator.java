@@ -2,7 +2,7 @@ package org.customers.system.domain;
 
 public interface CustomerCreator {
 
-    boolean createUser(Customer customer);
+    Customer createCustomer(Customer customerFactory);
 
-    boolean deleteUser(Customer customer);
+    boolean deleteCustomer(Customer customer);
 }

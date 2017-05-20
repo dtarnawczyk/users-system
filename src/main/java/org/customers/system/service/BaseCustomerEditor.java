@@ -1,4 +1,4 @@
-package org.customers.system.domain.base;
+package org.customers.system.service;
 
 import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomerEditor;

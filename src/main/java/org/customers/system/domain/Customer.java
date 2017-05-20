@@ -1,7 +1,10 @@
 package org.customers.system.domain;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -10,10 +13,11 @@ import java.time.LocalDate;
 public class Customer implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private long id;
 
-    @NotNull
+    @Size(min = 6)
+    @NotEmpty
     @Column()
     private String login;
 
@@ -21,11 +25,11 @@ public class Customer implements Serializable{
     private String lastName;
     private String address;
 
-    @NotNull
-    @Column()
+    @Email
+    @NotEmpty
     private String email;
 
-    @NotNull
+    @NotEmpty
     private String password;
 
     private boolean active;

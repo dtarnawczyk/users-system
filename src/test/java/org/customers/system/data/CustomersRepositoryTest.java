@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserRepositoryTest {
+public class CustomersRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -22,16 +22,16 @@ public class UserRepositoryTest {
     private CustomersRepository repository;
 
     @Test
-    public void whenUserExistsThenShouldFind() {
+    public void whenUserInRepositoryThenShouldFindUser() {
         // given
         Customer customer = new Customer();
-        customer.setLogin("test");
+        customer.setLogin("test111");
         customer.setEmail("test@test.com");
         customer.setPassword("123test");
         this.entityManager.persist(customer);
 
         // when
-        Customer searchedCustomer = this.repository.findByLogin("test");
+        Customer searchedCustomer = this.repository.findByLoginAndPassword("test111", "123test");
 
         // then
         assertThat(searchedCustomer.getLogin()).isEqualTo(customer.getLogin());
