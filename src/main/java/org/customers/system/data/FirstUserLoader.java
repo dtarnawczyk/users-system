@@ -1,16 +1,16 @@
-package org.customers.system.repository;
+package org.customers.system.data;
 
 import org.apache.log4j.Logger;
 import org.customers.system.domain.Customer;
+import org.customers.system.domain.CustomersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.stereotype.Component;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
-@Component
+// Ignored while data is loaded through data-h2.sql file
+//@Component
 public class FirstUserLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private CustomersRepository usersRepository;
@@ -37,14 +37,14 @@ public class FirstUserLoader implements ApplicationListener<ContextRefreshedEven
 
     private Customer creatingFirstCustomer() {
         Customer user = new Customer();
-        user.setLogin("test");
+        user.setLogin("firstUser");
         user.setFirstName("Tester");
         user.setPassword("test4321");
         user.setActive(true);
         user.setCustomerGroup("USER");
         user.setEmail("test@email.com");
-        user.setCreated(Date.valueOf(LocalDate.now()));
-        user.setModified(Date.valueOf(LocalDate.now()));
+        user.setCreated(LocalDate.now());
+        user.setModified(LocalDate.now());
         return user;
     }
 }

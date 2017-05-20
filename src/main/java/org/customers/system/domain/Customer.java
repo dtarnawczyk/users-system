@@ -1,28 +1,37 @@
 package org.customers.system.domain;
 
 import javax.persistence.*;
-import java.sql.Date;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer implements Serializable{
 
     @Id
-    @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false)
+
+    @NotNull
+    @Column()
     private String login;
+
     private String firstName;
     private String lastName;
     private String address;
-    @Column(nullable = false)
+
+    @NotNull
+    @Column()
     private String email;
+
+    @NotNull
     private String password;
+
     private boolean active;
     private String customerGroup;
-    private Date created;
-    private Date modified;
+    private LocalDate created;
+    private LocalDate modified;
 
     public String getLogin() {
         return login;
@@ -56,11 +65,11 @@ public class Customer {
         return customerGroup;
     }
 
-    public Date getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public Date getModified() {
+    public LocalDate getModified() {
         return modified;
     }
 
@@ -104,11 +113,11 @@ public class Customer {
         this.customerGroup = customerGroup;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 
-    public void setModified(Date modified) {
+    public void setModified(LocalDate modified) {
         this.modified = modified;
     }
 }

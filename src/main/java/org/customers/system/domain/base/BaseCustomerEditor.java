@@ -1,9 +1,9 @@
-package org.customers.system.domain.web;
+package org.customers.system.domain.base;
 
 import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomerEditor;
 
-public class WebCustomerEditor implements CustomerEditor {
+public class BaseCustomerEditor implements CustomerEditor {
     @Override
     public void changeUsersFirstName(Customer customer, String firstName) {
 

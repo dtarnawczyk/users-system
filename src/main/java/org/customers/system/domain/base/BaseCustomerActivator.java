@@ -1,9 +1,9 @@
-package org.customers.system.domain.web;
+package org.customers.system.domain.base;
 
 import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomerActivator;
 
-public class WebCustomerActivator implements CustomerActivator {
+public class BaseCustomerActivator implements CustomerActivator {
 
     @Override
     public void activate(Customer customer) {

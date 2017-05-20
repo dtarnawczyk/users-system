@@ -1,4 +1,4 @@
-package org.customers.system.domain.web;
+package org.customers.system.domain.base;
 
 import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomerMessaging;
