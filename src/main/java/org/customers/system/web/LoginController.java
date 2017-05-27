@@ -4,44 +4,39 @@ import org.apache.log4j.Logger;
 import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomersService;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 public class LoginController {
 
     private static final Logger log = Logger.getLogger(LoginController.class);
 
-    private CustomersService service;
+    private final CustomersService service;
 
     public LoginController(CustomersService service){
         this.service = service;
     }
 
     @GetMapping("/")
-    public String homePage() {
+    public String homePage(LoginForm loginForm) {
         return "login";
     }
 
     @PostMapping("/login")
-    public String loginAttempt(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        try {
-            String login = request.getParameter("login");
-            String password = request.getParameter("password");
-            Customer customer = service.getCustomer(login, password);
+    public String login(@Valid LoginForm loginForm,
+                               BindingResult result,
+                               RedirectAttributes redirectAttributes) {
 
-            if(customer != null)
-                return "redirect:/logged";
-            else {
-                redirectAttributes.addFlashAttribute("error", "User not found");
-            }
-        } catch(Exception e) {
-            redirectAttributes.addFlashAttribute("error", e.getLocalizedMessage());
+        if(formHasErrors(result)) {
+            return "login";
+        } else {
+            return getLoggedViewIfCustomerExists(loginForm, redirectAttributes);
         }
-        return "redirect:/";
     }
 
     @GetMapping("/logged")
@@ -49,5 +44,22 @@ public class LoginController {
         return "logged";
     }
 
+    private boolean formHasErrors(BindingResult bindingResult) {
+        return bindingResult.hasErrors();
+    }
+
+    private String getLoggedViewIfCustomerExists(LoginForm form, RedirectAttributes attributes) {
+        try {
+            Customer customer = service.getCustomer(form.getLogin(), form.getPassword());
+            if(customer != null)
+                return "redirect:logged";
+            else {
+                attributes.addFlashAttribute("error", "User not found");
+            }
+        } catch(Exception e) {
+            attributes.addFlashAttribute("error", e.getLocalizedMessage());
+        }
+        return "redirect:";
+    }
 
 }
