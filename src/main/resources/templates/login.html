@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.na/thymeleaf/layout"
       layout:decorator="layout/default">
 <head lang="pl">
+    <meta charset="UTF-8" />
     <title>Login</title>
 </head>
 <body>
@@ -25,8 +26,8 @@
                         <div class='input-field col s12'>
                             <input class='validate' type='text' name='login' id='login'
                                    th:field="${loginForm.login}" th:errorclass="invalid"/>
-                            <label for='login'>Enter your login</label>
-                            <div th:errors="${loginForm.login}" class="red-text">Error</div>
+                            <label for='login' th:text="#{enterLogin}">Enter your login</label>
+                            <div th:errors="*{login}" class="red-text">Error</div>
                         </div>
                     </div>
 
@@ -34,22 +35,22 @@
                         <div class='input-field col s12'>
                             <input class='validate' type='password' name='password' id='password'
                                    th:field="${loginForm.password}" th:errorclass="invalid"/>
-                            <label for='password'>Enter your password</label>
-                            <div th:errors="${loginForm.password}" class="red-text">Error</div>
+                            <label for='password' th:text="#{enterPassword}">Enter your password</label>
+                            <div th:errors="*{password}" class="red-text">Error</div>
                         </div>
                         <label style='float: right;'>
-                            <a class='pink-text' href='#!'><b>Forgot Password?</b></a>
+                            <a class='pink-text' href='#!' th:text="#{forgotPassword}"><b>Forgot Password?</b></a>
                         </label>
                     </div>
 
                     <center>
                         <div class="row">
-                            <button type="submit" name="btn_login" class="col s12 btn btn-large waves-effect indigo">Login</button>
+                            <button type="submit" name="btn_login" class="col s12 btn btn-large waves-effect indigo" th:text="#{loginText}">Login</button>
                         </div>
                     </center>
                 </form>
             </div>
-            <a href="" th:href="@{createForm}">Create account</a>
+            <a href="" th:href="@{createForm}" th:text="#{createAccount}">Create account</a>
         </div>
 
     </div>
