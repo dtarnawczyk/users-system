@@ -31,11 +31,15 @@ public class LoginController {
     public String login(@Valid LoginForm loginForm,
                                BindingResult result,
                                RedirectAttributes redirectAttributes) {
-
         if(formHasErrors(result)) {
             return "login";
         } else {
-            return getLoggedViewIfCustomerExists(loginForm, redirectAttributes);
+            if(consumerExists(loginForm.getLogin(), loginForm.getPassword())){
+                return "redirect:logged";
+            } else {
+                setErrorMessage(redirectAttributes);
+                return "redirect:";
+            }
         }
     }
 
@@ -48,18 +52,12 @@ public class LoginController {
         return bindingResult.hasErrors();
     }
 
-    private String getLoggedViewIfCustomerExists(LoginForm form, RedirectAttributes attributes) {
-        try {
-            Customer customer = service.getCustomer(form.getLogin(), form.getPassword());
-            if(customer != null)
-                return "redirect:logged";
-            else {
-                attributes.addFlashAttribute("error", "User not found");
-            }
-        } catch(Exception e) {
-            attributes.addFlashAttribute("error", e.getLocalizedMessage());
-        }
-        return "redirect:";
+    private boolean consumerExists(String login, String password) {
+        Customer customer = service.getCustomer(login, password);
+        return customer != null ? true : false;
     }
 
+    private void setErrorMessage(RedirectAttributes attributes) {
+        attributes.addFlashAttribute("error", "Customer not found");
+    }
 }

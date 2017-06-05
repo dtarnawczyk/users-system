@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "customers")
@@ -123,6 +124,25 @@ public class Customer implements Serializable{
 
     public void setModified(LocalDate modified) {
         this.modified = modified;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if(!(o instanceof Customer))
+            return false;
+        Customer customer = (Customer) o;
+        if(this == customer)
+            return true;
+        return Objects.equals(id, customer.id);
+    }
+
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.na/thymeleaf/layout"
+      layout:decorator="layout/default">
+<head lang="pl">
+    <title>Create a new Customer</title>
+</head>
+<body>
+<div class="row" layout:fragment="content">
+    <h5 class="indigo-text center">Create a new Customer</h5>
+
+    <div class="container center">
+
+        <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+            <form class="col s12" th:action="@{/createCustomer}" method="post" th:object="${createForm}">
+
+                <div class='row'>
+                    <div class='col s12'>
+                        <div id="errorMessage" class="card-panel red lighten-2" th:if="${error}">
+                            <span class="card-title" th:text="${error}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <input class='validate' type='text' name='login' id='login'
+                               th:field="${createForm.login}" th:errorclass="invalid"/>
+                        <label for='login'>Enter your login</label>
+                        <div th:errors="${createForm.login}" class="red-text">Error</div>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <input class='validate' type='password' name='password' id='password'
+                               th:field="${createForm.password}" th:errorclass="invalid"/>
+                        <label for='password'>Enter your password</label>
+                        <div th:errors="${createForm.password}" class="red-text">Error</div>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <input class='validate' type='password' name='passwordAgain' id='passwordAgain'
+                               th:field="${createForm.password}" th:errorclass="invalid"/>
+                        <label for='passwordAgain'>Repeat your password</label>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <input class='validate' type='email' name='email' id='email'
+                               th:field="${createForm.email}" th:errorclass="invalid"/>
+                        <label for='email'>Enter your email</label>
+                        <div th:errors="${createForm.email}" class="red-text">Error</div>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <input class='validate' type='text' name='firstName' id='firstName'
+                               th:field="${createForm.firstName}" th:errorclass="invalid"/>
+                        <label for='firstName'>Enter your first name</label>
+                        <div th:errors="${createForm.firstName}" class="red-text">Error</div>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <input class='validate' type='text' name='lastName' id='lastName'
+                               th:field="${createForm.lastName}" th:errorclass="invalid"/>
+                        <label for='lastName'>Enter your last name</label>
+                        <div th:errors="${createForm.lastName}" class="red-text">Error</div>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <input class='validate' type='text' name='address' id='address'
+                               th:field="${createForm.address}" th:errorclass="invalid"/>
+                        <label for='address'>Enter your address</label>
+                        <div th:errors="${createForm.address}" class="red-text">Error</div>
+                    </div>
+                </div>
+
+                <center>
+                    <div class="row">
+                        <button type="submit" name="btn_create" class="col s12 btn btn-large waves-effect indigo">Create</button>
+                    </div>
+                </center>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script src="/webjars/jquery/3.2.0/jquery.js"></script>
+<script src="/webjars/materializecss/0.98.2/js/materialize.js"></script>
+</body>
+</html>

@@ -2,9 +2,7 @@ package org.customers.system.web.controller;
 
 import org.customers.system.Application;
 import org.customers.system.domain.Customer;
-import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.CustomersService;
-import org.customers.system.service.BaseCustomersService;
 import org.customers.system.web.LoginController;
 import org.customers.system.web.LoginForm;
 import org.junit.Before;
@@ -38,12 +36,8 @@ public class LoginControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private CustomersRepository repository;
-
     @Before
     public void setup() {
-        CustomersService service = new BaseCustomersService(repository);
         controller = new LoginController(service);
     }
 
@@ -88,19 +82,19 @@ public class LoginControllerTest {
                 post("/login")
                         .param("login", fakeCustomerLogin)
                         .param("password", fakeCustomerPassword))
-                .andExpect(flash().attribute("error", is("User not found")))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attribute("error", is("Customer not found")))
                 .andExpect(redirectedUrl(""));
 
         // then
         verify(service, times(1)).getCustomer(fakeCustomerLogin, fakeCustomerPassword);
         verifyNoMoreInteractions(service);
-//
     }
 
     @Test
-    public void whenTooShortLoginThenShowError() throws Exception {
+    public void whenLoginEmptyThenShowError() throws Exception {
         // given
-        String tooShortLogin = "test";
+        String tooShortLogin = "";
         String fakeCustomerPassword = "test1234";
         when(service.getCustomer(tooShortLogin, fakeCustomerPassword)).thenReturn(new Customer());
 
@@ -118,10 +112,10 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void whenTooShortPasswordThenShowError() throws Exception {
+    public void whenPasswordEmptyThenShowError() throws Exception {
         // given
         String fakeCustomerLogin = "testCustomer";
-        String tooShortPassword = "test";
+        String tooShortPassword = "";
         when(service.getCustomer(fakeCustomerLogin, tooShortPassword)).thenReturn(new Customer());
 
         // when

@@ -1,13 +1,12 @@
 package org.customers.system.web;
 
 import lombok.Data;
-
-import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 public class LoginForm {
-    @Size(min=5)
+    @NotEmpty
     private String login;
-    @Size(min=6)
+    @NotEmpty
     private String password;
 }

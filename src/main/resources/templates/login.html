@@ -10,13 +10,14 @@
         <h5 class="indigo-text center">Login</h5>
 
         <div class="container center">
-            <div id="errorMessage" class="card-panel red lighten-2" th:if="${error}">
-                <span class="card-title" th:text="${error}"></span>
-            </div>
+
             <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
                 <form class="col s12" th:action="@{/login}" method="post" th:object="${loginForm}">
                     <div class='row'>
                         <div class='col s12'>
+                            <div id="errorMessage" class="card-panel red lighten-2" th:if="${error}">
+                                <span class="card-title" th:text="${error}"></span>
+                            </div>
                         </div>
                     </div>
 
@@ -25,7 +26,7 @@
                             <input class='validate' type='text' name='login' id='login'
                                    th:field="${loginForm.login}" th:errorclass="invalid"/>
                             <label for='login'>Enter your login</label>
-                            <div th:errors="*{login}" class="red-text">Error</div>
+                            <div th:errors="${loginForm.login}" class="red-text">Error</div>
                         </div>
                     </div>
 
@@ -34,7 +35,7 @@
                             <input class='validate' type='password' name='password' id='password'
                                    th:field="${loginForm.password}" th:errorclass="invalid"/>
                             <label for='password'>Enter your password</label>
-                            <div th:errors="*{password}" class="red-text">Error</div>
+                            <div th:errors="${loginForm.password}" class="red-text">Error</div>
                         </div>
                         <label style='float: right;'>
                             <a class='pink-text' href='#!'><b>Forgot Password?</b></a>
@@ -48,7 +49,7 @@
                     </center>
                 </form>
             </div>
-            <a href="#!">Create account</a>
+            <a href="" th:href="@{createForm}">Create account</a>
         </div>
 
     </div>
