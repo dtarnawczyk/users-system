@@ -1,4 +1,4 @@
-package org.customers.system.web;
+package org.customers.system.web.controlers.login;
 
 import org.apache.log4j.Logger;
 import org.customers.system.domain.Customer;

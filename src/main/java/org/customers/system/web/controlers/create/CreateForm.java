@@ -1,4 +1,4 @@
-package org.customers.system.web;
+package org.customers.system.web.controlers.create;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;

@@ -1,7 +1,7 @@
 package org.customers.system.web.utils;
 
 import org.customers.system.domain.Customer;
-import org.customers.system.web.CreateForm;
+import org.customers.system.web.controlers.create.CreateForm;
 
 import java.time.LocalDate;
 
