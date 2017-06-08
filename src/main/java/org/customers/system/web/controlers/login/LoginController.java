@@ -3,6 +3,7 @@ package org.customers.system.web.controlers.login;
 import org.apache.log4j.Logger;
 import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomersService;
+import org.customers.system.web.controlers.create.CreateForm;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Locale;
+import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -39,7 +41,12 @@ public class LoginController {
         if(formHasErrors(result)) {
             return "login";
         } else {
-            if(consumerExists(loginForm.getLogin(), loginForm.getPassword())){
+            Optional<Customer> customerOptional = getCustomer(loginForm.getLogin(), loginForm.getPassword());
+            if(customerOptional.isPresent()){
+
+                redirectAttributes.addFlashAttribute("profileForm",
+                        mapCustomerToProfileForm(customerOptional.get()));
+
                 return "redirect:logged";
             } else {
                 setErrorMessage(redirectAttributes);
@@ -50,6 +57,7 @@ public class LoginController {
 
     @GetMapping("/logged")
     public String logged(){
+
         return "logged";
     }
 
@@ -57,14 +65,24 @@ public class LoginController {
         return bindingResult.hasErrors();
     }
 
-    private boolean consumerExists(String login, String password) {
+    private Optional<Customer> getCustomer(String login, String password) {
         Customer customer = service.getCustomer(login, password);
-        return customer != null ? true : false;
+        return Optional.ofNullable(customer);
     }
 
     private void setErrorMessage(RedirectAttributes attributes) {
         Locale current = LocaleContextHolder.getLocale();
         String localizedErrorMessage = messageSource.getMessage("customerNotFound", null, current);
         attributes.addFlashAttribute("error", localizedErrorMessage);
+    }
+
+    private CreateForm mapCustomerToProfileForm(Customer customer) {
+        CreateForm form = new CreateForm();
+        form.setFirstName(customer.getFirstName());
+        form.setLogin(customer.getLogin());
+        form.setLastName(customer.getLastName());
+        form.setAddress(customer.getAddress());
+        form.setEmail(customer.getEmail());
+        return form;
     }
 }

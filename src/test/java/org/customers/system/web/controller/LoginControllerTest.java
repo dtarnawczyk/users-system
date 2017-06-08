@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.MessageSource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -32,13 +33,15 @@ public class LoginControllerTest {
 
     @MockBean
     private CustomersService service;
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     private MockMvc mockMvc;
 
     @Before
     public void setup() {
-        controller = new LoginController(service);
+        controller = new LoginController(service, messageSource);
     }
 
     @Test
@@ -62,6 +65,7 @@ public class LoginControllerTest {
                 .param("login", fakeCustomerLogin)
                 .param("password", fakeCustomerPassword))
                 .andDo(print())
+                .andExpect(flash().attributeExists("profileForm"))
                 .andExpect(redirectedUrl("logged"));
 
         // then
