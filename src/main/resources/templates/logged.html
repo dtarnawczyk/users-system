@@ -13,8 +13,13 @@
         <div class="row">
             <div class="col s12 z-depth-4 card-panel">
 
-
-            <form class="col s12" th:action="@{/updateCustomer}" method="post" th:object="${profileForm}">
+                <div class='row margin'>
+                    <div class='col s12'>
+                        <div id="updateMessage" class="card-panel red lighten-2" th:if="${updateMessage}">
+                            <span class="card-title" th:text="${customerSuccessfullyUpdated}"></span>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="input-field col s12 center">
@@ -22,26 +27,23 @@
                     </div>
                 </div>
 
+                <form class="col s12" th:action="@{/updateCustomer}" method="post" th:object="${profileForm}" enctype="multipart/form-data">
+
                 <div id="input-file-input" class="section">
                     <div class="row">
-                        <!--<div class="col s12 m4 l3">
+                        <div class="col s2 m4 l3">
+                            <img src="images/unknown.gif" id="profilePhoto" class="circle responsive-img valign profile-image-post"/>
+                        </div>
+                        <div class="col s10 m8 l9">
 
-                            <figure class="card-profile-image">
-                                <img src="images/unknown.gif" alt="profile image" class="circle z-depth-2 responsive-img activator"/>
-                            </figure>
+                            <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span th:text="#{updatePhoto}">Update photo </span>
+                                        <input type="file" id="photoSelector" name="photoSelector"/>
+                                    </div>
+                            </div>
 
                         </div>
-                        <div class="col s12 m8 l9">
-                            <form action="#">
-                                <div class="file-field input-field">
-                                    <input class="file-path validate" type="text" />
-                                    <div class="btn">
-                                        <span th:text="#{updatePhoto}">Update photo</span>
-                                        <input type="file" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>-->
                     </div>
                 </div>
 
@@ -90,8 +92,10 @@
                 </div>
 
                 <center>
-                    <div class="row">
-                        <button type="submit" name="btn_create" class="col s12 btn btn-large waves-effect indigo" th:text="#{update}">Update</button>
+                    <div class="row margin">
+                        <div class='col s12'>
+                            <button type="submit" name="btn_create" class="btn btn-large waves-effect indigo" th:text="#{saveChanges}">Save changes</button>
+                        </div>
                     </div>
                 </center>
 
@@ -100,7 +104,5 @@
         </div>
     </div>
 </div>
-<script src="/webjars/jquery/3.2.0/jquery.js"></script>
-<script src="/webjars/materializecss/0.98.2/js/materialize.js"></script>
 </body>
 </html>

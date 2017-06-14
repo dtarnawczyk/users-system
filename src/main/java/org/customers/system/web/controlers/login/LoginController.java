@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomersService;
 import org.customers.system.web.controlers.create.CreateForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,8 +23,9 @@ public class LoginController {
     private static final Logger log = Logger.getLogger(LoginController.class);
 
     private final CustomersService service;
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
+    @Autowired
     public LoginController(CustomersService service, MessageSource messageSource) {
         this.service = service;
         this.messageSource = messageSource;
