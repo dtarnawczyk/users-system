@@ -1,16 +1,23 @@
 package org.customers.system.domain;
 
+import org.customers.system.domain.model.Customer;
+import org.customers.system.service.exception.CustomerNotFoundException;
+
 public interface CustomerEditor {
 
-    void changeUsersFirstName(Customer customer, String firstName);
+    void updateUsersFirstName(Customer customer, String firstName);
 
-    void changeUsersLastName(Customer customer, String lastName);
+    void updateUsersLastName(Customer customer, String lastName);
 
-    void changeUsersAddress(Customer customer, String address);
+    void updateUsersAddress(Customer customer, String address);
 
-    void changeUsersEmail(Customer customer, String email);
+    void updateUsersEmail(Customer customer, String email);
 
-    void changePassword(Customer customer, String password);
+    void updatePassword(Customer customer, String password);
 
-    void changeGroup(Customer customer, String group);
+    void updateCgroup(Customer customer, String group);
+
+    void updateActive(Customer customer, String group);
+
+    Customer updateCustomer(Customer existingCustomer) throws CustomerNotFoundException;
 }

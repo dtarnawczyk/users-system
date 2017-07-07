@@ -1,17 +1,18 @@
 package org.customers.system.web.controller;
 
 import org.customers.system.Application;
-import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomerCreator;
-import org.customers.system.web.controlers.create.CreateCustomerController;
-import org.customers.system.web.controlers.create.CreateForm;
-import org.customers.system.web.utils.CustomerFromFormBuilder;
+import org.customers.system.domain.model.Customer;
+import org.customers.system.web.controllers.create.CreateCustomerController;
+import org.customers.system.web.controllers.profileForm.ProfileForm;
+import org.customers.system.web.utils.CustomerFormBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -36,12 +37,12 @@ public class CreateCustomerControllerTest {
     @Test
     public void whenCreateFormProvidedThenCreateConsumer() throws Exception {
         // given
-        CreateForm form = buildTestFormWithEmailAndFirstName("test@test.pl", "");
-        Customer customer = CustomerFromFormBuilder.build(form);
+        ProfileForm form = buildTestFormWithEmailAndFirstName("test@test.pl", "tester");
+        Customer customer = CustomerFormBuilder.buildCustomer(form);
         when(service.createCustomer(customer)).thenReturn(customer);
 
         // when
-        mockMvc.perform(post("/createCustomer")
+        mockMvc.perform(post("/createCustomer").accept(MediaType.TEXT_HTML)
                 .param("login", form.getLogin())
                 .param("password", form.getPassword())
                 .param("email", form.getEmail())
@@ -57,9 +58,9 @@ public class CreateCustomerControllerTest {
     }
 
     @Test
-    public void whenFirstNameEmptyAndWrongEmailAndAndTooShortPasswordThenError() throws Exception {
+    public void whenWrongEmailAndAndTooShortPasswordThenError() throws Exception {
         // when
-        mockMvc.perform(post("/createCustomer")
+        mockMvc.perform(post("/createCustomer").accept(MediaType.TEXT_HTML)
                 .param("login", "tester")
                 .param("password", "short")
                 .param("email", "wrong.pl")
@@ -67,19 +68,19 @@ public class CreateCustomerControllerTest {
                 .param("lastName", "test")
                 .param("address", "address"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeHasFieldErrors("createForm", "firstName", "email", "password"))
+                .andExpect(model().attributeHasFieldErrors("profileForm", "email", "password"))
                 .andExpect(view().name("createNewCustomer"));
 
         // then
         verifyNoMoreInteractions(service);
     }
 
-    private CreateForm buildTestFormWithEmailAndFirstName(String email, String firstName) {
-        CreateForm form = new CreateForm();
+    private ProfileForm buildTestFormWithEmailAndFirstName(String email, String firstName) {
+        ProfileForm form = new ProfileForm();
         form.setLogin("testCustomer");
         form.setPassword("customerPass");
-        form.setEmail("cust@shop.pl");
-        form.setFirstName("Tom");
+        form.setEmail(email);
+        form.setFirstName(firstName);
         form.setLastName("Smith");
         form.setAddress("Poland");
         return form;

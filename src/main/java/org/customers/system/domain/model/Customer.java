@@ -1,25 +1,27 @@
-package org.customers.system.domain;
+package org.customers.system.domain.model;
 
+import org.customers.system.domain.util.Constants;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "CUSTOMERS")
 public class Customer implements Serializable{
 
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(generator = Constants.ID_GENERATOR)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Size(min = 6)
-    @NotEmpty
-    @Column()
+    @NotNull
+    @Column(nullable = false, unique = true)
     private String login;
 
     private String firstName;
@@ -27,16 +29,19 @@ public class Customer implements Serializable{
     private String address;
 
     @Email
-    @NotEmpty
+    @NotNull
+    @Column(nullable = false)
     private String email;
 
-    @NotEmpty
+    @NotNull
+    @Column(nullable = false)
     private String password;
 
     private boolean active;
-    private String customerGroup;
+    private String cgroup;
     private LocalDate created;
     private LocalDate modified;
+    private String profileImage;
 
     public String getLogin() {
         return login;
@@ -66,8 +71,8 @@ public class Customer implements Serializable{
         return active;
     }
 
-    public String getCustomerGroup() {
-        return customerGroup;
+    public String getCgroup() {
+        return cgroup;
     }
 
     public LocalDate getCreated() {
@@ -78,12 +83,8 @@ public class Customer implements Serializable{
         return modified;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public void setLogin(String login) {
@@ -114,8 +115,8 @@ public class Customer implements Serializable{
         this.active = active;
     }
 
-    public void setCustomerGroup(String customerGroup) {
-        this.customerGroup = customerGroup;
+    public void setCgroup(String customerGroup) {
+        this.cgroup = customerGroup;
     }
 
     public void setCreated(LocalDate created) {
@@ -124,6 +125,14 @@ public class Customer implements Serializable{
 
     public void setModified(LocalDate modified) {
         this.modified = modified;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public boolean equals(Object o) {

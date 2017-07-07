@@ -1,9 +1,10 @@
-package org.customers.system.web.controlers.create;
+package org.customers.system.web.controllers.create;
 
 import org.apache.log4j.Logger;
-import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomerCreator;
-import org.customers.system.web.utils.CustomerFromFormBuilder;
+import org.customers.system.domain.model.Customer;
+import org.customers.system.web.controllers.profileForm.ProfileForm;
+import org.customers.system.web.utils.CustomerFormBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,24 +20,24 @@ public class CreateCustomerController {
 
     private final CustomerCreator service;
 
-    public CreateCustomerController(CustomerCreator service){
+    CreateCustomerController(CustomerCreator service){
         this.service = service;
     }
 
     @GetMapping("/createForm")
-    public String loadCreatePage(CreateForm createForm){
+    String loadCreatePage(ProfileForm profileForm){
         return "createNewCustomer";
     }
 
     @PostMapping("/createCustomer")
-    public String login(@Valid CreateForm createForm,
+    String login(@Valid ProfileForm profileForm,
                         BindingResult result,
                         RedirectAttributes redirectAttributes) {
 
         if(formHasErrors(result)) {
             return "createNewCustomer";
         } else {
-            Customer customer = CustomerFromFormBuilder.build(createForm);
+            Customer customer = CustomerFormBuilder.buildCustomer(profileForm);
             if(saveCustomer(customer)) {
                 return "created";
             } else {
@@ -55,6 +56,6 @@ public class CreateCustomerController {
     }
 
     private boolean saveCustomer(Customer customer) {
-        return service.createCustomer(customer) != null ? true : false;
+        return service.createCustomer(customer) != null;
     }
 }

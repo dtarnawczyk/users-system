@@ -30,9 +30,6 @@ war {
     version =  '0.0.1'
 }
 
-ext['hibernate.version'] = '5.2.2.Final'
-ext['hibernate-entitymanager.version'] = '5.2.2.Final'
-
 dependencies {
     compile ('org.springframework.boot:spring-boot-starter-web')
     compile ('org.springframework.boot:spring-boot-starter-thymeleaf')

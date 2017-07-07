@@ -27,3 +27,8 @@ main {
 .container {
     width: 400px;
 }
+
+.profile-image {
+    max-width: 90px;
+    height: 100px;
+}

@@ -1,8 +1,8 @@
 package org.customers.system.service;
 
-import org.customers.system.domain.Customer;
-import org.customers.system.domain.CustomerFactory;
 import org.customers.system.domain.CustomersService;
+import org.customers.system.domain.model.Customer;
+import org.customers.system.domain.model.CustomerFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,15 +40,14 @@ public class CustomersServiceTest {
     }
 
     @Test
-    public void findGivenUser(){
+    public void shouldFindGivenUser(){
         // given
         Customer createdCustomer = this.entityManager.persist(testCustomer);
 
-
         // when
-        Customer searchedCustomer = this.service.getCustomer(testCustomer.getLogin(), testCustomer.getPassword());
+        Optional<Customer> searchedCustomer = this.service.getCustomer(testCustomer.getLogin(), testCustomer.getPassword());
 
         // then
-        assertEquals(createdCustomer.getId(), searchedCustomer.getId());
+        assertEquals(createdCustomer.getId(), searchedCustomer.get().getId());
     }
 }

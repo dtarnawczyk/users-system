@@ -13,7 +13,7 @@
     <div class="container center">
         <div class="row">
         <div class="col s12 z-depth-4 card-panel">
-            <form class="col s12" th:action="@{/createCustomer}" method="post" th:object="${createForm}">
+            <form class="col s12" th:action="@{/createCustomer}" method="post" th:object="${profileForm}">
 
                 <div class="row">
                     <div class="input-field col s12 center">
@@ -32,25 +32,25 @@
                 <div class='row margin'>
                     <div class='input-field col s12'>
                         <input class='validate' type='text' name='login' id='login'
-                               th:field="${createForm.login}" th:errorclass="invalid"/>
+                               th:field="${profileForm.login}" th:errorclass="invalid"/>
                         <label for='login' th:text="#{enterYourLogin}">Enter your login</label>
-                        <div th:errors="${createForm.login}" class="red-text">Error</div>
+                        <div th:errors="${profileForm.login}" class="red-text">Error</div>
                     </div>
                 </div>
 
                 <div class='row margin'>
                     <div class='input-field col s12'>
                         <input class='validate' type='password' name='password' id='password'
-                               th:field="${createForm.password}" th:errorclass="invalid"/>
+                               th:field="${profileForm.password}" th:errorclass="invalid"/>
                         <label for='password' th:text="#{enterYourPassword}">Enter your password</label>
-                        <div th:errors="${createForm.password}" class="red-text">Error</div>
+                        <div th:errors="${profileForm.password}" class="red-text">Error</div>
                     </div>
                 </div>
 
                 <div class='row margin'>
                     <div class='input-field col s12'>
                         <input class='validate' type='password' name='passwordAgain' id='passwordAgain'
-                               th:field="${createForm.password}" th:errorclass="invalid"/>
+                               th:field="${profileForm.password}" th:errorclass="invalid"/>
                         <label for='passwordAgain' th:text="#{repeatYourPassword}">Repeat your password</label>
                     </div>
                 </div>
@@ -58,36 +58,36 @@
                 <div class='row margin'>
                     <div class='input-field col s12'>
                         <input class='validate' type='email' name='email' id='email'
-                               th:field="${createForm.email}" th:errorclass="invalid"/>
+                               th:field="${profileForm.email}" th:errorclass="invalid"/>
                         <label for='email' th:text="#{enterYourEmail}">Enter your email</label>
-                        <div th:errors="${createForm.email}" class="red-text">Error</div>
+                        <div th:errors="${profileForm.email}" class="red-text">Error</div>
                     </div>
                 </div>
 
                 <div class='row margin'>
                     <div class='input-field col s12'>
                         <input class='validate' type='text' name='firstName' id='firstName'
-                               th:field="${createForm.firstName}" th:errorclass="invalid"/>
+                               th:field="${profileForm.firstName}" th:errorclass="invalid"/>
                         <label for='firstName' th:text="#{enterYourFirstName}">Enter your first name</label>
-                        <div th:errors="${createForm.firstName}" class="red-text">Error</div>
+                        <div th:errors="${profileForm.firstName}" class="red-text">Error</div>
                     </div>
                 </div>
 
                 <div class='row margin'>
                     <div class='input-field col s12'>
                         <input class='validate' type='text' name='lastName' id='lastName'
-                               th:field="${createForm.lastName}" th:errorclass="invalid"/>
+                               th:field="${profileForm.lastName}" th:errorclass="invalid"/>
                         <label for='lastName' th:text="#{enterYourLastName}">Enter your last name</label>
-                        <div th:errors="${createForm.lastName}" class="red-text">Error</div>
+                        <div th:errors="${profileForm.lastName}" class="red-text">Error</div>
                     </div>
                 </div>
 
                 <div class='row margin'>
                     <div class='input-field col s12'>
                         <input class='validate' type='text' name='address' id='address'
-                               th:field="${createForm.address}" th:errorclass="invalid"/>
+                               th:field="${profileForm.address}" th:errorclass="invalid"/>
                         <label for='address' th:text="#{enterYourAddress}">Enter your address</label>
-                        <div th:errors="${createForm.address}" class="red-text">Error</div>
+                        <div th:errors="${profileForm.address}" class="red-text">Error</div>
                     </div>
                 </div>
 

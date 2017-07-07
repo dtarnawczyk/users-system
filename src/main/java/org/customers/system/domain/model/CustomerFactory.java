@@ -1,4 +1,4 @@
-package org.customers.system.domain;
+package org.customers.system.domain.model;
 
 import java.time.LocalDate;
 
@@ -11,7 +11,8 @@ public class CustomerFactory {
     private String email;
     private String password;
     private boolean active;
-    private String customerGroup;
+    private String profileImage;
+    private String cgroup;
     private LocalDate created;
     private LocalDate modified;
     private Customer customer = null;
@@ -51,8 +52,13 @@ public class CustomerFactory {
         return this;
     }
 
-    public CustomerFactory setCustomerGroup(String group){
-        this.customerGroup = group;
+    public CustomerFactory setProfileImage(String profileImage){
+        this.profileImage = profileImage;
+        return this;
+    }
+
+    public CustomerFactory setCgroup(String customersGroup){
+        this.cgroup = customersGroup;
         return this;
     }
 
@@ -77,9 +83,10 @@ public class CustomerFactory {
         customer.setEmail(email);
         customer.setPassword(password);
         customer.setActive(active);
-        customer.setCustomerGroup(customerGroup);
+        customer.setCgroup(cgroup);
         customer.setCreated(created);
         customer.setModified(modified);
+        customer.setProfileImage(profileImage);
         this.customer = customer;
         return customer;
     }

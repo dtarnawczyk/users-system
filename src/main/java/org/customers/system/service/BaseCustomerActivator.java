@@ -1,7 +1,7 @@
 package org.customers.system.service;
 
-import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomerActivator;
+import org.customers.system.domain.model.Customer;
 
 public class BaseCustomerActivator implements CustomerActivator {
 

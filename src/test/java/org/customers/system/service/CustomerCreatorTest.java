@@ -1,8 +1,8 @@
 package org.customers.system.service;
 
-import org.customers.system.domain.Customer;
 import org.customers.system.domain.CustomerCreator;
-import org.customers.system.domain.CustomerFactory;
+import org.customers.system.domain.model.Customer;
+import org.customers.system.domain.model.CustomerFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,8 +53,6 @@ public class CustomerCreatorTest {
     public void whenUserDeletedThenDoesNotExistInRepository() {
         // given
         Customer createdCustomer = this.entityManager.persist(testCustomer);
-        this.entityManager.persist(testCustomer);
-        this.entityManager.persist(testCustomer);
 
         // when
         this.creator.deleteCustomer(createdCustomer);
