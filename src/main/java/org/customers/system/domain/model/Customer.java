@@ -1,11 +1,8 @@
 package org.customers.system.domain.model;
 
 import org.customers.system.domain.util.Constants;
-import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -16,11 +13,8 @@ public class Customer implements Serializable{
 
     @Id
     @GeneratedValue(generator = Constants.ID_GENERATOR)
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 6)
-    @NotNull
     @Column(nullable = false, unique = true)
     private String login;
 
@@ -28,12 +22,9 @@ public class Customer implements Serializable{
     private String lastName;
     private String address;
 
-    @Email
-    @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @NotNull
     @Column(nullable = false)
     private String password;
 

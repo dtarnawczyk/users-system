@@ -4,7 +4,7 @@ import org.customers.system.Application;
 import org.customers.system.domain.CustomerCreator;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.web.controllers.create.CreateCustomerController;
-import org.customers.system.web.controllers.profileForm.ProfileForm;
+import org.customers.system.web.controllers.profileForm.ProfileFormDto;
 import org.customers.system.web.utils.CustomerFormBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -29,7 +28,7 @@ public class CreateCustomerControllerTest {
     private CreateCustomerController controller;
 
     @MockBean
-    private CustomerCreator service;
+    private CustomerCreator createService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,9 +36,9 @@ public class CreateCustomerControllerTest {
     @Test
     public void whenCreateFormProvidedThenCreateConsumer() throws Exception {
         // given
-        ProfileForm form = buildTestFormWithEmailAndFirstName("test@test.pl", "tester");
+        ProfileFormDto form = buildTestFormWithEmailAndFirstName("test@test.pl", "tester");
         Customer customer = CustomerFormBuilder.buildCustomer(form);
-        when(service.createCustomer(customer)).thenReturn(customer);
+        when(createService.create(customer)).thenReturn(customer);
 
         // when
         mockMvc.perform(post("/createCustomer").accept(MediaType.TEXT_HTML)
@@ -53,8 +52,8 @@ public class CreateCustomerControllerTest {
                 .andExpect(view().name("created"));
 
         // then
-        verify(service, times(1)).createCustomer(customer);
-        verifyNoMoreInteractions(service);
+        verify(createService, atLeastOnce()).create(customer);
+        verifyNoMoreInteractions(createService);
     }
 
     @Test
@@ -72,11 +71,11 @@ public class CreateCustomerControllerTest {
                 .andExpect(view().name("createNewCustomer"));
 
         // then
-        verifyNoMoreInteractions(service);
+        verifyNoMoreInteractions(createService);
     }
 
-    private ProfileForm buildTestFormWithEmailAndFirstName(String email, String firstName) {
-        ProfileForm form = new ProfileForm();
+    private ProfileFormDto buildTestFormWithEmailAndFirstName(String email, String firstName) {
+        ProfileFormDto form = new ProfileFormDto();
         form.setLogin("testCustomer");
         form.setPassword("customerPass");
         form.setEmail(email);

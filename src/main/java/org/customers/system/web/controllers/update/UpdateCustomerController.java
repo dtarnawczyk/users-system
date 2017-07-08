@@ -1,16 +1,15 @@
 package org.customers.system.web.controllers.update;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.customers.system.domain.CustomerEditor;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.service.StorageService;
 import org.customers.system.service.exception.CustomerNotFoundException;
 import org.customers.system.web.config.PictureProperties;
-import org.customers.system.web.controllers.profileForm.ProfileForm;
+import org.customers.system.web.controllers.profileForm.ProfileFormDto;
 import org.customers.system.web.controllers.profileForm.ProfileSession;
 import org.customers.system.web.utils.CustomerFormBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -29,23 +28,22 @@ import java.util.Optional;
 
 @Controller
 @SessionAttributes("picturePath")
+@Slf4j
 public class UpdateCustomerController {
-
-    private static final Logger LOG = Logger.getLogger(UpdateCustomerController.class);
 
     private final StorageService storageService;
     private final MessageSource messageSource;
     private final CustomerEditor customerEditor;
     private final Resource defaultImage;
     private final ProfileSession profileSession;
+    private PictureProperties pictureProperties;
     public static final String PICTURE_PATH_ATTRIBUTE = "picturePath";
 
-    @Autowired
     public UpdateCustomerController(StorageService storageService,
-                             MessageSource messageSource,
-                             CustomerEditor customerEditor,
-                             PictureProperties pictureProperties,
-                             ProfileSession profileSession) {
+                                    MessageSource messageSource,
+                                    CustomerEditor customerEditor,
+                                    PictureProperties pictureProperties,
+                                    ProfileSession profileSession) {
         this.storageService = storageService;
         this.messageSource = messageSource;
         this.customerEditor = customerEditor;
@@ -53,8 +51,8 @@ public class UpdateCustomerController {
         this.profileSession = profileSession;
     }
 
-    @ModelAttribute
-    public ProfileForm getLoginForm(){
+    @ModelAttribute("profileForm")
+    public ProfileFormDto getLoginForm(){
         return getProfileSession().restoreProfile();
     }
 
@@ -74,7 +72,7 @@ public class UpdateCustomerController {
     @GetMapping("/logged")
     public String logged(Model model, RedirectAttributes redirectAttributes, Locale locale) {
         if(getProfileSession().isProfileAvailable()) {
-            ProfileForm profileForm = getProfileSession().restoreProfile();
+            ProfileFormDto profileForm = getProfileSession().restoreProfile();
             try {
                 if(profileForm.getProfileImage() != null) {
                     Optional<Resource> resourceOptional = this.storageService.load(profileForm.getProfileImage());
@@ -99,7 +97,7 @@ public class UpdateCustomerController {
     }
 
     @PostMapping(value = "/update")
-    public String updateCustomer(@Valid ProfileForm profileForm,
+    public String updateCustomer(@Valid @ModelAttribute("profileForm") ProfileFormDto profileForm,
                           @RequestPart(name = "photoSelector", required = false) MultipartFile photoFile,
                           RedirectAttributes redirectAttributes,
                           Locale locale) throws IOException {
@@ -131,13 +129,13 @@ public class UpdateCustomerController {
         return file.getContentType().startsWith("image");
     }
 
-    private void updateCustomer(ProfileForm profileForm) throws CustomerNotFoundException {
+    private void updateCustomer(ProfileFormDto profileForm) throws CustomerNotFoundException {
         Customer customer = CustomerFormBuilder.buildCustomer(profileForm);
         customerEditor.updateCustomer(customer);
         getProfileSession().saveProfile(CustomerFormBuilder.buildForm(customer));
     }
 
-    private String storeProfilePhoto(MultipartFile photoFile, ProfileForm profileForm) throws Exception {
+    private String storeProfilePhoto(MultipartFile photoFile, ProfileFormDto profileForm) throws Exception {
         return storageService.store(photoFile, profileForm.getLogin());
     }
 }

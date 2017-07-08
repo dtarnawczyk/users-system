@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface CustomersService {
     Optional<Customer> getCustomer(String login, String password);
+    List<Customer> getAll();
     List<Customer> getCustomersByCreationDate(LocalDate date);
     List<Customer> getCustomersByModificationDate(LocalDate date);
 }

@@ -1,13 +1,13 @@
 package org.customers.system.web.utils;
 
 import org.customers.system.domain.model.Customer;
-import org.customers.system.web.controllers.profileForm.ProfileForm;
+import org.customers.system.web.controllers.profileForm.ProfileFormDto;
 
 import java.time.LocalDate;
 
 public class CustomerFormBuilder {
 
-    public static Customer buildCustomer(ProfileForm profileForm) {
+    public static Customer buildCustomer(ProfileFormDto profileForm) {
         Customer customer = new Customer();
         customer.setLogin(profileForm.getLogin());
         customer.setPassword(profileForm.getPassword());
@@ -23,8 +23,8 @@ public class CustomerFormBuilder {
         return customer;
     }
 
-    public static ProfileForm buildForm(Customer customer) {
-        ProfileForm profileForm = new ProfileForm();
+    public static ProfileFormDto buildForm(Customer customer) {
+        ProfileFormDto profileForm = new ProfileFormDto();
         profileForm.setFirstName(customer.getFirstName());
         profileForm.setLogin(customer.getLogin());
         profileForm.setPassword(customer.getPassword());

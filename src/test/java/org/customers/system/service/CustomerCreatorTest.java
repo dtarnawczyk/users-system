@@ -43,7 +43,7 @@ public class CustomerCreatorTest {
         // given
 
         // when
-        Customer createdCustomer = this.creator.createCustomer(testCustomer);
+        Customer createdCustomer = this.creator.create(testCustomer);
 
         // then
         assertNotNull(this.entityManager.find(Customer.class, createdCustomer.getId()));
@@ -55,7 +55,7 @@ public class CustomerCreatorTest {
         Customer createdCustomer = this.entityManager.persist(testCustomer);
 
         // when
-        this.creator.deleteCustomer(createdCustomer);
+        this.creator.delete(createdCustomer);
 
         // then
         assertThat(this.entityManager.find(Customer.class, createdCustomer.getId())).isNull();

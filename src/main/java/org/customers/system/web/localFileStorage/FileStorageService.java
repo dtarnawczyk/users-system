@@ -1,6 +1,6 @@
 package org.customers.system.web.localFileStorage;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.customers.system.service.StorageService;
 import org.customers.system.web.config.PictureProperties;
@@ -13,9 +13,8 @@ import java.io.*;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class FileStorageService implements StorageService {
-
-    private static final Logger LOG = Logger.getLogger(FileStorageService.class);
 
     private static final String NAME_JOINER = "_";
 
@@ -37,17 +36,17 @@ public class FileStorageService implements StorageService {
         if(resource.exists() || resource.isReadable()) {
             return Optional.of(resource);
         } else {
-            LOG.info("Could not find file: " + filePath);
+            log.info("Could not find file: " + filePath);
         }
         return Optional.empty();
     }
 
     private String storeFileInFileSystem(MultipartFile file, String username) throws IOException {
         if (file.isEmpty()) {
-            LOG.info("Failed to store empty file " + file.getOriginalFilename());
+            log.info("Failed to store empty file " + file.getOriginalFilename());
             throw new IOException();
         } else {
-            String orginalFilename = file.getOriginalFilename().isEmpty() ? file.getName() : file.getOriginalFilename();
+            String orginalFilename = file.getOriginalFilename().isEmpty() ? file.getName() : file.getOriginalFilename(); 
             String fileName = createFileName(orginalFilename, username);
             File newFile = new File(this.picturesResource.getFile(), fileName);
             if(newFile.exists())

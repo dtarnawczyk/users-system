@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Data
-public class ProfileForm {
+public class ProfileFormDto {
     @Size(min=5)
     @NotEmpty
     protected String login;

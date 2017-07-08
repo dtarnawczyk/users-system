@@ -1,23 +1,23 @@
 package org.customers.system.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.customers.system.domain.CustomerEditor;
 import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.service.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
-public class BaseCustomerEditor implements CustomerEditor {
+@Slf4j
+@RequiredArgsConstructor
+public class BaseCustomerEditorService implements CustomerEditor {
 
     private final CustomersRepository repository;
-
-    BaseCustomerEditor(CustomersRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public void updateUsersFirstName(Customer customer, String firstName) {

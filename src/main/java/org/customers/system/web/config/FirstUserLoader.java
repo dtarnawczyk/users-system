@@ -1,9 +1,9 @@
-package org.customers.system.repository;
+package org.customers.system.web.config;
 
-import org.apache.log4j.Logger;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.model.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -12,19 +12,14 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class FirstUserLoader implements ApplicationListener<ContextRefreshedEvent> {
-
-    private Logger log = Logger.getLogger(FirstUserLoader.class);
 
     private static final String FIRST_USER_LOGIN = "firstUser";
     private static final String FIRST_USER_PASSWORD = "test4321";
 
-    private CustomersRepository usersRepository;
-
-    @Autowired
-    public FirstUserLoader(CustomersRepository repository){
-        this.usersRepository = repository;
-    }
+    private final CustomersRepository usersRepository;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -36,8 +31,8 @@ public class FirstUserLoader implements ApplicationListener<ContextRefreshedEven
 
         }
 
-        Iterable<Customer> iterableUsers = usersRepository.findAll();
-        iterableUsers.forEach(u -> {
+        Iterable<Customer> users = usersRepository.findAll();
+        users.forEach(u -> {
             log.info("User found: " + u.getLogin());
         });
     }

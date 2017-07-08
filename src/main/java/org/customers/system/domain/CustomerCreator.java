@@ -4,7 +4,7 @@ import org.customers.system.domain.model.Customer;
 
 public interface CustomerCreator {
 
-    Customer createCustomer(Customer customerFactory);
+    Customer create(Customer customerFactory);
 
-    boolean deleteCustomer(Customer customer);
+    boolean delete(Customer customer);
 }

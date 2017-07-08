@@ -1,12 +1,12 @@
 package org.customers.system.web.controllers.login;
 
-import org.apache.log4j.Logger;
+import groovy.util.logging.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.customers.system.domain.CustomersService;
 import org.customers.system.domain.model.Customer;
-import org.customers.system.web.controllers.profileForm.ProfileForm;
+import org.customers.system.web.controllers.profileForm.ProfileFormDto;
 import org.customers.system.web.controllers.profileForm.ProfileSession;
 import org.customers.system.web.utils.CustomerFormBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,9 +20,9 @@ import java.util.Locale;
 import java.util.Optional;
 
 @Controller
+@Slf4j
+@RequiredArgsConstructor
 public class LoginController {
-
-    private static final Logger log = Logger.getLogger(LoginController.class);
 
     private static final String LOGIN_VIEW = "login";
     private static final String REDIRECT_LOGGED_VIEW = "redirect:/logged";
@@ -31,15 +31,8 @@ public class LoginController {
     private final MessageSource messageSource;
     private final ProfileSession profileSession;
 
-    @Autowired
-    public LoginController(CustomersService service, MessageSource messageSource, ProfileSession profileSession) {
-        this.service = service;
-        this.messageSource = messageSource;
-        this.profileSession = profileSession;
-    }
-
-    @ModelAttribute
-    public ProfileForm getLoginForm(){
+    @ModelAttribute("profileForm")
+    public ProfileFormDto getLoginForm(){
         return getProfileSession().restoreProfile();
     }
 
@@ -53,7 +46,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    String login(@Valid ProfileForm profileForm,
+    String login(@Valid @ModelAttribute("profileForm") ProfileFormDto profileForm,
                                BindingResult result,
                                RedirectAttributes redirectAttributes,
                                Locale locale) {
@@ -72,7 +65,7 @@ public class LoginController {
     }
 
     private void saveCustomerInSession(Customer customer) {
-        ProfileForm fullProfileForm = CustomerFormBuilder.buildForm(customer);
+        ProfileFormDto fullProfileForm = CustomerFormBuilder.buildForm(customer);
         getProfileSession().saveProfile(fullProfileForm);
     }
 

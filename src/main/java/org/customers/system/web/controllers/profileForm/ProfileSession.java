@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class ProfileSession extends ProfileForm implements Serializable {
+public class ProfileSession extends ProfileFormDto implements Serializable {
 
-    public void saveProfile(ProfileForm profileForm){
+    public void saveProfile(ProfileFormDto profileForm){
         this.login = profileForm.getLogin();
         this.password = profileForm.getPassword();
         this.address = profileForm.getAddress();
@@ -20,8 +20,8 @@ public class ProfileSession extends ProfileForm implements Serializable {
         this.profileImage = profileForm.getProfileImage();
     }
 
-    public ProfileForm restoreProfile() {
-        ProfileForm profileForm = new ProfileForm();
+    public ProfileFormDto restoreProfile() {
+        ProfileFormDto profileForm = new ProfileFormDto();
         profileForm.setLogin(this.login);
         profileForm.setPassword(this.password);
         profileForm.setEmail(this.email);

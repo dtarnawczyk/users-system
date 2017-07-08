@@ -1,5 +1,6 @@
 package org.customers.system.service;
 
+import org.customers.system.domain.CustomerCreator;
 import org.customers.system.domain.CustomerEditor;
 import org.customers.system.domain.CustomersService;
 import org.customers.system.domain.model.Customer;
@@ -27,6 +28,9 @@ public class CustomerEditorTest {
     private CustomersService customersService;
 
     @Autowired
+    private CustomerCreator customerCreatorService;
+
+    @Autowired
     private TestEntityManager entityManager;
 
     private Customer testCustomer;
@@ -43,12 +47,12 @@ public class CustomerEditorTest {
                 .setProfileImage("image")
                 .setCgroup("admins")
                 .createCustomer();
-        entityManager.persist(testCustomer);
+        customerCreatorService.create(testCustomer);
     }
 
     @After
     public void removeTestUser() {
-        entityManager.remove(testCustomer);
+        customerCreatorService.delete(testCustomer);
     }
 
     @Test

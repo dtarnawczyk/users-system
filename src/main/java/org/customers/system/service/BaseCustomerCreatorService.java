@@ -1,5 +1,6 @@
 package org.customers.system.service;
 
+import lombok.RequiredArgsConstructor;
 import org.customers.system.domain.CustomerCreator;
 import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.model.Customer;
@@ -8,24 +9,21 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-public class BaseCustomerCreator implements CustomerCreator {
+@RequiredArgsConstructor
+public class BaseCustomerCreatorService implements CustomerCreator {
 
-    private CustomersRepository repository;
-
-    public BaseCustomerCreator(CustomersRepository repository) {
-        this.repository = repository;
-    }
+    private final CustomersRepository repository;
 
     @Transactional
     @Override
-    public Customer createCustomer(Customer customer) {
+    public Customer create(Customer customer) {
         return repository.save(customer);
     }
 
     @Transactional
     @Override
-    public boolean deleteCustomer(Customer customer) {
+    public boolean delete(Customer customer) {
         repository.delete(customer.getId());
-        return repository.findByLoginAndPassword(customer.getLogin(), customer.getPassword()) != null;
+        return repository.findOne(customer.getId()) != null;
     }
 }

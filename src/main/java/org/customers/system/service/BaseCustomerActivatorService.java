@@ -3,7 +3,7 @@ package org.customers.system.service;
 import org.customers.system.domain.CustomerActivator;
 import org.customers.system.domain.model.Customer;
 
-public class BaseCustomerActivator implements CustomerActivator {
+public class BaseCustomerActivatorService implements CustomerActivator {
 
     @Override
     public void activate(Customer customer) {
