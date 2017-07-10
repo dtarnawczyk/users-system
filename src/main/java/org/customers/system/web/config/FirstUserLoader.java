@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.model.Customer;
+import org.customers.system.domain.model.Role;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,6 +50,7 @@ public class FirstUserLoader implements ApplicationListener<ContextRefreshedEven
         user.setEmail("test@email.com");
         user.setCreated(LocalDate.now());
         user.setModified(LocalDate.now());
+        user.setRole(Role.USER);
         return user;
     }
 }

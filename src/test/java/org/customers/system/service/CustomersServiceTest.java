@@ -3,6 +3,7 @@ package org.customers.system.service;
 import org.customers.system.domain.CustomersService;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.domain.model.CustomerFactory;
+import org.customers.system.domain.model.Role;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,13 +41,14 @@ public class CustomersServiceTest {
     public void shouldFindGivenUser(){
         // given
         String rawPassword = "test123";
-        testCustomer = new CustomerFactory()
+        Customer testCustomer = new CustomerFactory()
                 .setLogin("test111")
                 .setFirstName("John")
                 .setLastName("Doe")
                 .setActive(true)
                 .setEmail("email@server.com")
                 .setPassword(passwordEncoder.encode(rawPassword))
+                .setRole(Role.USER)
                 .createCustomer();
         Customer createdCustomer = this.entityManager.persist(testCustomer);
 

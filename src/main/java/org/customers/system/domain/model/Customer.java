@@ -34,6 +34,10 @@ public class Customer implements Serializable{
     private LocalDate modified;
     private String profileImage;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public String getLogin() {
         return login;
     }
@@ -124,6 +128,14 @@ public class Customer implements Serializable{
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public boolean equals(Object o) {

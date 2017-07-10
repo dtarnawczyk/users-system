@@ -71,8 +71,8 @@ public class BaseCustomerEditorService implements CustomerEditor {
                 if(customer.getLastName() != null && !customer.getLastName().isEmpty()) foundCustomer.setLastName(customer.getLastName());
                 if(customer.getProfileImage() != null && !customer.getProfileImage().isEmpty()) foundCustomer.setProfileImage(customer.getProfileImage());
                 if(customer.getCgroup() != null && !customer.getCgroup().isEmpty()) foundCustomer.setCgroup(customer.getCgroup());
-                if(customer.isActive() && !foundCustomer.isActive()) foundCustomer.setActive(true);
-                if(!customer.isActive() && foundCustomer.isActive()) foundCustomer.setActive(false);
+                if(customer.isActive() != foundCustomer.isActive()) foundCustomer.setActive(customer.isActive());
+                if(customer.getRole() != foundCustomer.getRole()) foundCustomer.setRole(customer.getRole());
                 return repository.save(foundCustomer);
             }
         }

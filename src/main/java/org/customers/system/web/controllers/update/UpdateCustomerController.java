@@ -76,9 +76,7 @@ public class UpdateCustomerController {
             try {
                 if(profileForm.getProfileImage() != null) {
                     Optional<Resource> resourceOptional = this.storageService.load(profileForm.getProfileImage());
-                    if (resourceOptional.isPresent()) {
-                        model.addAttribute(PICTURE_PATH_ATTRIBUTE, resourceOptional.get());
-                    }
+                    resourceOptional.ifPresent(resource -> model.addAttribute(PICTURE_PATH_ATTRIBUTE, resource));
                 } else
                     model.addAttribute(PICTURE_PATH_ATTRIBUTE, this.defaultImage);
             } catch (Exception e) {

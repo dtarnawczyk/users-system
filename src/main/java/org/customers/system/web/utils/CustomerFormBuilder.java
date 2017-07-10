@@ -1,6 +1,7 @@
 package org.customers.system.web.utils;
 
 import org.customers.system.domain.model.Customer;
+import org.customers.system.domain.model.Role;
 import org.customers.system.web.controllers.profileForm.ProfileFormDto;
 
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class CustomerFormBuilder {
         customer.setCreated(LocalDate.now());
         customer.setModified(LocalDate.now());
         customer.setProfileImage(profileForm.getProfileImage());
+        customer.setRole(Role.USER);
         return customer;
     }
 

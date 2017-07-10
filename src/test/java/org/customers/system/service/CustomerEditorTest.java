@@ -5,6 +5,7 @@ import org.customers.system.domain.CustomerEditor;
 import org.customers.system.domain.CustomersService;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.domain.model.CustomerFactory;
+import org.customers.system.domain.model.Role;
 import org.customers.system.service.exception.CustomerNotFoundException;
 import org.junit.After;
 import org.junit.Before;
@@ -48,6 +49,7 @@ public class CustomerEditorTest {
                 .setPassword(TEST_PASSWORD)
                 .setProfileImage("image")
                 .setCgroup("admins")
+                .setRole(Role.ADMIN)
                 .createCustomer();
         customerCreatorService.create(testCustomer);
     }
@@ -70,6 +72,7 @@ public class CustomerEditorTest {
         editedCustomer.setEmail("newmail@test.com");
         editedCustomer.setProfileImage("someImage2");
         editedCustomer.setCgroup("commons");
+        editedCustomer.setRole(Role.USER);
 
         //when
         Customer afterEditCustomer = editorServive.updateCustomer(editedCustomer);
@@ -81,6 +84,7 @@ public class CustomerEditorTest {
         assertThat(afterEditCustomer.getEmail()).isEqualTo(editedCustomer.getEmail());
         assertThat(afterEditCustomer.getProfileImage()).isEqualTo(editedCustomer.getProfileImage());
         assertThat(afterEditCustomer.getCgroup()).isEqualTo(editedCustomer.getCgroup());
+        assertThat(afterEditCustomer.getRole()).isEqualTo(editedCustomer.getRole());
     }
 
     @Test(expected = CustomerNotFoundException.class)

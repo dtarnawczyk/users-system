@@ -15,6 +15,7 @@ public class CustomerFactory {
     private String cgroup;
     private LocalDate created;
     private LocalDate modified;
+    private Role role;
     private Customer customer = null;
 
     public CustomerFactory setLogin(String login){
@@ -72,6 +73,11 @@ public class CustomerFactory {
         return this;
     }
 
+    public CustomerFactory setRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
     public Customer createCustomer() {
         if(login == null || email == null || password == null)
             throw new IllegalStateException("Login or email or password not specified");
@@ -87,6 +93,7 @@ public class CustomerFactory {
         customer.setCreated(created);
         customer.setModified(modified);
         customer.setProfileImage(profileImage);
+        customer.setRole(role);
         this.customer = customer;
         return customer;
     }
