@@ -6,6 +6,7 @@ import org.customers.system.domain.CustomerEditor;
 import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.service.exception.CustomerNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class BaseCustomerEditorService implements CustomerEditor {
 
     private final CustomersRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void updateUsersFirstName(Customer customer, String firstName) {
@@ -57,21 +59,23 @@ public class BaseCustomerEditorService implements CustomerEditor {
     @Transactional
     @Override
     public Customer updateCustomer(Customer customer) throws CustomerNotFoundException {
-        Optional<Customer> dbCustomer = repository.findByLoginAndPassword(
-                customer.getLogin(), customer.getPassword());
+        Optional<Customer> dbCustomer = repository.findByLogin(
+                customer.getLogin());
         if(dbCustomer.isPresent()) {
             Customer foundCustomer = dbCustomer.get();
-            if (customer.getFirstName() != null && !customer.getFirstName().isEmpty()) foundCustomer.setFirstName(customer.getFirstName());
-            foundCustomer.setModified(LocalDate.now());
-            if(customer.getAddress() != null && !customer.getAddress().isEmpty()) foundCustomer.setAddress(customer.getAddress());
-            if(customer.getEmail() != null && !customer.getEmail().isEmpty()) foundCustomer.setEmail(customer.getEmail());
-            if(customer.getLastName() != null && !customer.getLastName().isEmpty()) foundCustomer.setLastName(customer.getLastName());
-            if(customer.getProfileImage() != null && !customer.getProfileImage().isEmpty()) foundCustomer.setProfileImage(customer.getProfileImage());
-            if(customer.getCgroup() != null && !customer.getCgroup().isEmpty()) foundCustomer.setCgroup(customer.getCgroup());
-            if(customer.isActive() && !foundCustomer.isActive()) foundCustomer.setActive(true);
-            if(!customer.isActive() && foundCustomer.isActive()) foundCustomer.setActive(false);
-            return repository.save(foundCustomer);
-        } else throw new CustomerNotFoundException("User not found");
-
+            if(passwordEncoder.matches(customer.getPassword(), foundCustomer.getPassword())) {
+                if (customer.getFirstName() != null && !customer.getFirstName().isEmpty()) foundCustomer.setFirstName(customer.getFirstName());
+                foundCustomer.setModified(LocalDate.now());
+                if(customer.getAddress() != null && !customer.getAddress().isEmpty()) foundCustomer.setAddress(customer.getAddress());
+                if(customer.getEmail() != null && !customer.getEmail().isEmpty()) foundCustomer.setEmail(customer.getEmail());
+                if(customer.getLastName() != null && !customer.getLastName().isEmpty()) foundCustomer.setLastName(customer.getLastName());
+                if(customer.getProfileImage() != null && !customer.getProfileImage().isEmpty()) foundCustomer.setProfileImage(customer.getProfileImage());
+                if(customer.getCgroup() != null && !customer.getCgroup().isEmpty()) foundCustomer.setCgroup(customer.getCgroup());
+                if(customer.isActive() && !foundCustomer.isActive()) foundCustomer.setActive(true);
+                if(!customer.isActive() && foundCustomer.isActive()) foundCustomer.setActive(false);
+                return repository.save(foundCustomer);
+            }
+        }
+        throw new CustomerNotFoundException("User not found");
     }
 }

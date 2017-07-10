@@ -33,17 +33,19 @@ public class CustomerEditorTest {
     @Autowired
     private TestEntityManager entityManager;
 
+    private static final String TEST_USER = "testUser";
+    private static final String TEST_PASSWORD = "password4321";
     private Customer testCustomer;
 
     @Before
     public void createTestUser() {
         testCustomer = new CustomerFactory()
-                .setLogin("test111")
+                .setLogin(TEST_USER)
                 .setFirstName("John")
                 .setLastName("Doe")
                 .setActive(true)
                 .setEmail("email@server.com")
-                .setPassword("test123")
+                .setPassword(TEST_PASSWORD)
                 .setProfileImage("image")
                 .setCgroup("admins")
                 .createCustomer();
@@ -60,8 +62,8 @@ public class CustomerEditorTest {
 
         // given
         Customer editedCustomer = new Customer();
-        editedCustomer.setLogin(testCustomer.getLogin());
-        editedCustomer.setPassword(testCustomer.getPassword());
+        editedCustomer.setLogin(TEST_USER);
+        editedCustomer.setPassword(TEST_PASSWORD);
         editedCustomer.setFirstName("Tom");
         editedCustomer.setLastName("Underwood");
         editedCustomer.setActive(false);

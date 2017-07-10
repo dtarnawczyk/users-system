@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.CustomersService;
 import org.customers.system.domain.model.Customer;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +20,15 @@ import java.util.stream.StreamSupport;
 public class BaseCustomersService implements CustomersService {
 
     private final CustomersRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<Customer> getCustomer(String login, String password) {
-        return repository.findByLoginAndPassword(login, password);
+        Optional<Customer> foundCustomer = repository.findByLogin(login);
+        if(foundCustomer.isPresent() && passwordEncoder.matches(password, foundCustomer.get().getPassword())){
+            return Optional.of(foundCustomer.get());
+        }
+        return Optional.empty();
     }
 
     @Override

@@ -55,7 +55,9 @@ public class LoginController {
         } else {
             Optional<Customer> customerOptional = getCustomer(profileForm.getLogin(), profileForm.getPassword());
             if(customerOptional.isPresent()){
-                saveCustomerInSession(customerOptional.get());
+                Customer sessionCustomer = customerOptional.get();
+                sessionCustomer.setPassword(profileForm.getPassword());
+                saveCustomerInSession(sessionCustomer);
                 return REDIRECT_LOGGED_VIEW;
             } else {
                 setCustomerNotFoundErrorMessage(redirectAttributes, locale);

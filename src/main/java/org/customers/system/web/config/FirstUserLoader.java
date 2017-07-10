@@ -6,6 +6,7 @@ import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.model.Customer;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -20,10 +21,11 @@ public class FirstUserLoader implements ApplicationListener<ContextRefreshedEven
     private static final String FIRST_USER_PASSWORD = "test4321";
 
     private final CustomersRepository usersRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        Optional<Customer> optional = usersRepository.findByLoginAndPassword(FIRST_USER_LOGIN, FIRST_USER_PASSWORD);
+        Optional<Customer> optional = usersRepository.findByLogin(FIRST_USER_LOGIN);
         if(!optional.isPresent()) {
             Customer firstUser = creatingFirstCustomer();
             usersRepository.save(firstUser);
@@ -41,7 +43,7 @@ public class FirstUserLoader implements ApplicationListener<ContextRefreshedEven
         Customer user = new Customer();
         user.setLogin("firstUser");
         user.setFirstName("Tester");
-        user.setPassword("test4321");
+        user.setPassword(passwordEncoder.encode("test4321"));
         user.setActive(true);
         user.setCgroup("USER");
         user.setEmail("test@email.com");
