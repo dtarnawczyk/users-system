@@ -5,6 +5,7 @@ import org.customers.system.domain.CustomersService;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.web.controllers.profileForm.ProfileSession;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
+@Ignore
+@Deprecated
 public class LoginControllerTest {
 
     @MockBean

@@ -54,6 +54,7 @@ public class CreateCustomerControllerTest {
         mockMvc.perform(post("/createCustomer").accept(MediaType.TEXT_HTML)
                 .param("login", form.getLogin())
                 .param("password", form.getPassword())
+                .param("passwordRepeated", form.getPasswordRepeated())
                 .param("email", form.getEmail())
                 .param("firstName", form.getFirstName())
                 .param("lastName", form.getLastName())
@@ -67,17 +68,39 @@ public class CreateCustomerControllerTest {
     }
 
     @Test
-    public void whenWrongEmailAndAndTooShortPasswordThenError() throws Exception {
+    public void whenWrongEmailAndTooShortPasswordThenError() throws Exception {
         // when
         mockMvc.perform(post("/createCustomer").accept(MediaType.TEXT_HTML)
                 .param("login", "tester")
                 .param("password", "short")
+                .param("passwordRepeated", "short")
                 .param("email", "wrong.pl")
                 .param("firstName", "")
                 .param("lastName", "test")
                 .param("address", "address"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeHasFieldErrors("profileForm", "email", "password"))
+                .andExpect(model().attributeHasFieldErrors("profileForm",
+                        "email", "password"))
+                .andExpect(view().name("createNewCustomer"));
+
+        // then
+        verifyNoMoreInteractions(createService);
+    }
+
+    @Test
+    public void whenDifferentPasswordsThenError() throws Exception {
+        // when
+        mockMvc.perform(post("/createCustomer").accept(MediaType.TEXT_HTML)
+                .param("login", "tester")
+                .param("password", "password")
+                .param("passwordRepeated", "differentPass")
+                .param("email", "wrong.pl")
+                .param("firstName", "")
+                .param("lastName", "test")
+                .param("address", "address"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeHasFieldErrors("profileForm",
+                        "passwordRepeated"))
                 .andExpect(view().name("createNewCustomer"));
 
         // then
@@ -87,7 +110,9 @@ public class CreateCustomerControllerTest {
     private ProfileFormDto buildTestFormWithEmailAndFirstName(String email, String firstName) {
         ProfileFormDto form = new ProfileFormDto();
         form.setLogin("testCustomer");
-        form.setPassword("customerPass");
+        String password = "customPass";
+        form.setPassword(password);
+        form.setPasswordRepeated(password);
         form.setEmail(email);
         form.setFirstName(firstName);
         form.setLastName("Smith");

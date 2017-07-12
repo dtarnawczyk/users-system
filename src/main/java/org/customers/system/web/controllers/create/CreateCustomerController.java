@@ -5,15 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.customers.system.domain.CustomerCreator;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.web.controllers.profileForm.ProfileFormDto;
+import org.customers.system.web.controllers.profileForm.ProfileFormValidator;
 import org.customers.system.web.utils.CustomerFormBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,6 +23,12 @@ import javax.validation.Valid;
 public class CreateCustomerController {
 
     private final CustomerCreator service;
+    private final ProfileFormValidator validator;
+
+    @InitBinder("profileForm")
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
+    }
 
     @GetMapping("/createForm")
     String loadCreatePage(@ModelAttribute("profileForm") ProfileFormDto profileForm){
@@ -28,7 +36,7 @@ public class CreateCustomerController {
     }
 
     @PostMapping("/createCustomer")
-    String login(@Valid @ModelAttribute("profileForm") ProfileFormDto profileForm,
+    String login(@Validated @ModelAttribute("profileForm") ProfileFormDto profileForm,
                         BindingResult result,
                         RedirectAttributes redirectAttributes) {
 

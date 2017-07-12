@@ -17,6 +17,7 @@ import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class BaseCustomersService implements CustomersService {
 
     private final CustomersRepository repository;
@@ -32,7 +33,16 @@ public class BaseCustomersService implements CustomersService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    public Optional<Customer> getCustomerByEmail(String email) {
+        return repository.findOneByEmail(email);
+    }
+
+    @Override
+    public Optional<Customer> getCustomerByLogin(String login) {
+        return repository.findByLogin(login);
+    }
+
+    @Override
     public List<Customer> getAll() {
         List<Customer> customers = StreamSupport.stream(
                 repository.findAll().spliterator(), false)

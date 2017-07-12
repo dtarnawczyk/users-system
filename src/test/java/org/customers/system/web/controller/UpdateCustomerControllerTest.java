@@ -28,7 +28,6 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.File;
 import java.util.Optional;
 
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -112,22 +111,6 @@ public class UpdateCustomerControllerTest {
                 .andExpect(view().name("logged"));
 
         verify(this.storageService, times(1)).load(profileImageName);
-    }
-
-    @Test
-    public void shouldLogoutAndInvalidateSession() throws Exception {
-        // given
-        ProfileSession profileSession = new ProfileSession();
-        profileSession.setLogin(TEST_USER);
-        profileSession.setPassword(TEST_PASSWORD);
-        session.setAttribute("scopedTarget.profileSession", profileSession);
-        // when
-        this.mockMvc.perform(get("/logout").session(session)
-                .accept(MediaType.TEXT_HTML))
-        // then
-                .andExpect(status().isOk());
-
-        assertTrue(session.isInvalid());
     }
 
     @Test

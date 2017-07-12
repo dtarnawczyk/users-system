@@ -14,12 +14,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URLConnection;
@@ -56,9 +56,19 @@ public class UpdateCustomerController {
         return getProfileSession().restoreProfile();
     }
 
+    @InitBinder("profileForm")
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(null);
+    }
+
     @ModelAttribute(PICTURE_PATH_ATTRIBUTE)
     public Resource picturePath(){
         return this.defaultImage;
+    }
+
+    @GetMapping("/")
+    public String homePage() {
+        return "logged";
     }
 
     @GetMapping("/profileImage")
@@ -88,11 +98,11 @@ public class UpdateCustomerController {
         return "logged";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "login";
-    }
+//    @GetMapping("/logout")
+//    public String logout(HttpSession session){
+//        session.invalidate();
+//        return "login";
+//    }
 
     @PostMapping(value = "/update")
     public String updateCustomer(@Valid @ModelAttribute("profileForm") ProfileFormDto profileForm,

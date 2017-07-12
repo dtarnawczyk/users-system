@@ -16,6 +16,10 @@ public class ProfileFormDto {
     @NotEmpty
     protected String password;
 
+    @Size(min=6)
+    @NotEmpty
+    protected String passwordRepeated;
+
     @Email
     @NotEmpty
     protected String email;

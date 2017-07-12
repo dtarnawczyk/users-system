@@ -50,8 +50,9 @@
                 <div class='row margin'>
                     <div class='input-field col s12'>
                         <input class='validate' type='password' name='passwordAgain' id='passwordAgain'
-                               th:field="${profileForm.password}" th:errorclass="invalid"/>
+                               th:field="${profileForm.passwordRepeated}" th:errorclass="invalid"/>
                         <label for='passwordAgain' th:text="#{repeatYourPassword}">Repeat your password</label>
+                        <div th:errors="${profileForm.passwordRepeated}" class="red-text">Error</div>
                     </div>
                 </div>
 
@@ -69,7 +70,7 @@
                         <input class='validate' type='text' name='firstName' id='firstName'
                                th:field="${profileForm.firstName}" th:errorclass="invalid"/>
                         <label for='firstName' th:text="#{enterYourFirstName}">Enter your first name</label>
-                        <div th:errors="${profileForm.firstName}" class="red-text">Error</div>
+
                     </div>
                 </div>
 
@@ -78,7 +79,7 @@
                         <input class='validate' type='text' name='lastName' id='lastName'
                                th:field="${profileForm.lastName}" th:errorclass="invalid"/>
                         <label for='lastName' th:text="#{enterYourLastName}">Enter your last name</label>
-                        <div th:errors="${profileForm.lastName}" class="red-text">Error</div>
+
                     </div>
                 </div>
 
@@ -87,7 +88,7 @@
                         <input class='validate' type='text' name='address' id='address'
                                th:field="${profileForm.address}" th:errorclass="invalid"/>
                         <label for='address' th:text="#{enterYourAddress}">Enter your address</label>
-                        <div th:errors="${profileForm.address}" class="red-text">Error</div>
+
                     </div>
                 </div>
 
