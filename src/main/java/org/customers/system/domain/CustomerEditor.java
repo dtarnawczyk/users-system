@@ -19,5 +19,5 @@ public interface CustomerEditor {
 
     void updateActive(Customer customer, String group);
 
-    Customer updateCustomer(Customer existingCustomer) throws CustomerNotFoundException;
+    Customer updateCustomer(Customer customer) throws CustomerNotFoundException;
 }

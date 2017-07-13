@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled=true)
-@Order(2)
+@Order(3)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private AuthenticationProvider authenticationProvider;
@@ -35,7 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-//                .defaultSuccessUrl("/logged")
                 .successHandler(authenticationSuccessHandler)
                 .usernameParameter("login")
                 .permitAll()

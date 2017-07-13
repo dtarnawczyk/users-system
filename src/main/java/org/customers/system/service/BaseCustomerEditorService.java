@@ -63,16 +63,25 @@ public class BaseCustomerEditorService implements CustomerEditor {
                 customer.getLogin());
         if(dbCustomer.isPresent()) {
             Customer foundCustomer = dbCustomer.get();
-            if(passwordEncoder.matches(customer.getPassword(), foundCustomer.getPassword())) {
-                if (customer.getFirstName() != null && !customer.getFirstName().isEmpty()) foundCustomer.setFirstName(customer.getFirstName());
+            if(customer.getPassword().equals(foundCustomer.getPassword()) ||
+                    passwordEncoder.matches(customer.getPassword(), foundCustomer.getPassword())) {
+                if (customer.getFirstName() != null && !customer.getFirstName().isEmpty())
+                    foundCustomer.setFirstName(customer.getFirstName());
                 foundCustomer.setModified(LocalDate.now());
-                if(customer.getAddress() != null && !customer.getAddress().isEmpty()) foundCustomer.setAddress(customer.getAddress());
-                if(customer.getEmail() != null && !customer.getEmail().isEmpty()) foundCustomer.setEmail(customer.getEmail());
-                if(customer.getLastName() != null && !customer.getLastName().isEmpty()) foundCustomer.setLastName(customer.getLastName());
-                if(customer.getProfileImage() != null && !customer.getProfileImage().isEmpty()) foundCustomer.setProfileImage(customer.getProfileImage());
-                if(customer.getCgroup() != null && !customer.getCgroup().isEmpty()) foundCustomer.setCgroup(customer.getCgroup());
-                if(customer.isActive() != foundCustomer.isActive()) foundCustomer.setActive(customer.isActive());
-                if(customer.getRole() != foundCustomer.getRole()) foundCustomer.setRole(customer.getRole());
+                if(customer.getAddress() != null && !customer.getAddress().isEmpty())
+                    foundCustomer.setAddress(customer.getAddress());
+                if(customer.getEmail() != null && !customer.getEmail().isEmpty())
+                    foundCustomer.setEmail(customer.getEmail());
+                if(customer.getLastName() != null && !customer.getLastName().isEmpty())
+                    foundCustomer.setLastName(customer.getLastName());
+                if(customer.getProfileImage() != null && !customer.getProfileImage().isEmpty())
+                    foundCustomer.setProfileImage(customer.getProfileImage());
+                if(customer.getCgroup() != null && !customer.getCgroup().isEmpty())
+                    foundCustomer.setCgroup(customer.getCgroup());
+                if(customer.isActive() != foundCustomer.isActive())
+                    foundCustomer.setActive(customer.isActive());
+                if(customer.getRole() != foundCustomer.getRole())
+                    foundCustomer.setRole(customer.getRole());
                 return repository.save(foundCustomer);
             }
         }

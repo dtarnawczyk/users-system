@@ -1,4 +1,4 @@
-package org.customers.system.web.config;
+package org.customers.system.web.config.init;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,6 +6,7 @@ import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.domain.model.Role;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @Component
 @Slf4j
 @RequiredArgsConstructor
+@Profile("dev")
 public class FirstUserLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private static final String FIRST_USER_LOGIN = "firstUser";

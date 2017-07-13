@@ -30,8 +30,11 @@ public class Customer implements Serializable{
 
     private boolean active;
     private String cgroup;
+
     private LocalDate created;
+
     private LocalDate modified;
+
     private String profileImage;
 
     @Column(nullable = false)
@@ -145,12 +148,10 @@ public class Customer implements Serializable{
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if(!(o instanceof Customer))
+        if (!(o instanceof Customer))
             return false;
         Customer customer = (Customer) o;
-        if(this == customer)
-            return true;
-        return Objects.equals(id, customer.id);
+        return this == customer || Objects.equals(id, customer.id);
     }
 
     public int hashCode() {

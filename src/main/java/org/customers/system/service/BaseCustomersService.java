@@ -33,6 +33,11 @@ public class BaseCustomersService implements CustomersService {
     }
 
     @Override
+    public Optional<Customer> getCustomerById(Long id) {
+        return repository.findById(id);
+    }
+
+    @Override
     public Optional<Customer> getCustomerByEmail(String email) {
         return repository.findOneByEmail(email);
     }
@@ -48,6 +53,11 @@ public class BaseCustomersService implements CustomersService {
                 repository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
          return customers == null ? Collections.emptyList() : customers;
+    }
+
+    @Override
+    public boolean isCustomerExist(Customer customer) {
+        return customer.getId() != null && repository.exists(customer.getId());
     }
 
     @Override
