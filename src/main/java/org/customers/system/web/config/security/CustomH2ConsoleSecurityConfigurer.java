@@ -1,4 +1,4 @@
-package org.customers.system.web.config;
+package org.customers.system.web.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.h2.H2ConsoleProperties;
