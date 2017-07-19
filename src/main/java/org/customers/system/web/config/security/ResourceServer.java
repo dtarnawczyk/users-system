@@ -1,7 +1,7 @@
 package org.customers.system.web.config.security;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 
 @Configuration
 @EnableResourceServer
-@Order(2)
+@Profile("dev")
 public class ResourceServer extends ResourceServerConfigurerAdapter {
 
     public static final String RESOURCE_ID = "customers-service";
@@ -26,7 +26,7 @@ public class ResourceServer extends ResourceServerConfigurerAdapter {
         http.
                 anonymous().disable()
                 .requestMatchers()
-                .antMatchers("/api/customer")
+                .antMatchers("/api/**")
                 .and().authorizeRequests()
 //                .antMatchers("/api/**").access("hasRole('USER')")
                 .antMatchers((HttpMethod.GET)).hasAnyRole("USER")

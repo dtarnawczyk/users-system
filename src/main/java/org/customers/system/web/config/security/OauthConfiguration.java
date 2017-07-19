@@ -1,8 +1,9 @@
 package org.customers.system.web.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -14,27 +15,28 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @Configuration
 @EnableAuthorizationServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(3)
+@Profile("dev")
 public class OauthConfiguration extends AuthorizationServerConfigurerAdapter {
+
+    @Value("${oauth2.client.id}")
+    private String clientId;
+
+    @Value("${oauth2.client.secret}")
+    private String clientSecret;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
-//    @Autowired
-//    @Qualifier("usersService")
-//    private UserDetailsService userDetailsService;
-
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer configurer) throws Exception {
         configurer.authenticationManager(authenticationManager);
-//        configurer.userDetailsService(userDetailsService);
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("customers-service")
-                .secret("customers-service-secret")
+                .withClient(clientId)
+                .secret(clientSecret)
                 .accessTokenValiditySeconds(120) // 2 minutes
                 .refreshTokenValiditySeconds(600) // 10 minutes
                 .scopes("read", "write")
