@@ -1,6 +1,11 @@
 package org.customers.system.domain.model;
 
 import org.customers.system.domain.util.Constants;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +14,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "CUSTOMERS")
+@EntityListeners(AuditingEntityListener.class)
 public class Customer implements Serializable{
 
     @Id
@@ -31,9 +37,19 @@ public class Customer implements Serializable{
     private boolean active;
     private String cgroup;
 
+    @CreatedDate
+    @Column(name="created_date", nullable = false, updatable = false)
     private LocalDate created;
 
+    @LastModifiedDate
+    @Column(name="modified_date")
     private LocalDate modified;
+
+    @CreatedBy
+    private String createdBy;
+
+    @LastModifiedBy
+    private String mmodifiedBy;
 
     private String profileImage;
 
