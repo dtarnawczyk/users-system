@@ -1,8 +1,8 @@
-package org.customers.system.web.utils;
+package org.customers.system.web.controllers.ui.utils;
 
 import org.customers.system.domain.model.Customer;
 import org.customers.system.domain.model.Role;
-import org.customers.system.web.controllers.profileForm.ProfileFormDto;
+import org.customers.system.web.controllers.ui.profileForm.ProfileFormDto;
 
 import java.time.LocalDate;
 

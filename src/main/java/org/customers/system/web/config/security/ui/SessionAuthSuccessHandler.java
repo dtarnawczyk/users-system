@@ -1,8 +1,8 @@
-package org.customers.system.web.config;
+package org.customers.system.web.config.security.ui;
 
 import lombok.RequiredArgsConstructor;
-import org.customers.system.web.controllers.profileForm.ProfileFormDto;
-import org.customers.system.web.controllers.profileForm.ProfileSession;
+import org.customers.system.web.controllers.ui.profileForm.ProfileFormDto;
+import org.customers.system.web.controllers.ui.profileForm.ProfileSession;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.Authentication;

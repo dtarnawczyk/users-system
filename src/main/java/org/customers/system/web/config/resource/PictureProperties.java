@@ -1,4 +1,4 @@
-package org.customers.system.web.config;
+package org.customers.system.web.config.resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.boot.context.properties.ConfigurationProperties;

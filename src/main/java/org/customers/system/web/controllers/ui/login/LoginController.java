@@ -1,4 +1,4 @@
-package org.customers.system.web.controllers.login;
+package org.customers.system.web.controllers.ui.login;
 
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;

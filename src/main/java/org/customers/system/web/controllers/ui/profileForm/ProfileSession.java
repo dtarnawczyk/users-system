@@ -1,4 +1,4 @@
-package org.customers.system.web.controllers.profileForm;
+package org.customers.system.web.controllers.ui.profileForm;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

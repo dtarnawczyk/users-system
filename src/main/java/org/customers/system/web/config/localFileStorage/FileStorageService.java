@@ -1,9 +1,9 @@
-package org.customers.system.web.localFileStorage;
+package org.customers.system.web.config.localFileStorage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.customers.system.service.StorageService;
-import org.customers.system.web.config.PictureProperties;
+import org.customers.system.web.config.resource.PictureProperties;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;

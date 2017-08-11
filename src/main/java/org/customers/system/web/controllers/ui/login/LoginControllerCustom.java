@@ -1,12 +1,12 @@
-package org.customers.system.web.controllers.login;
+package org.customers.system.web.controllers.ui.login;
 
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.customers.system.domain.CustomersService;
 import org.customers.system.domain.model.Customer;
-import org.customers.system.web.controllers.profileForm.ProfileFormDto;
-import org.customers.system.web.controllers.profileForm.ProfileSession;
-import org.customers.system.web.utils.CustomerFormBuilder;
+import org.customers.system.web.controllers.ui.profileForm.ProfileFormDto;
+import org.customers.system.web.controllers.ui.profileForm.ProfileSession;
+import org.customers.system.web.controllers.ui.utils.CustomerFormBuilder;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;

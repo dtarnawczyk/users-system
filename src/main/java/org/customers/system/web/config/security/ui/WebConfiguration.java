@@ -1,5 +1,6 @@
-package org.customers.system.web.config;
+package org.customers.system.web.config.security.ui;
 
+import org.customers.system.web.config.resource.PictureProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

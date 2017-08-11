@@ -1,4 +1,4 @@
-package org.customers.system.web.controllers.profileForm;
+package org.customers.system.web.controllers.ui.profileForm;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;

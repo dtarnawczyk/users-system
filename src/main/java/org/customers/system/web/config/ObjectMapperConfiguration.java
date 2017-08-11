@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Configuration
-public class RestConfiguration {
+public class ObjectMapperConfiguration {
 
     public static final DateTimeFormatter DATE_FORMATTER = ofPattern("dd:MM:yyyy");
 

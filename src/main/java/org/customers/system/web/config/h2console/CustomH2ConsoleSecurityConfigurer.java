@@ -1,4 +1,4 @@
-package org.customers.system.web.config;
+package org.customers.system.web.config.h2console;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.h2.H2ConsoleProperties;
@@ -19,13 +19,11 @@ class CustomH2ConsoleSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         String path = this.console.getPath();
-        String antPattern = (path.endsWith("/") ? path + "**" : path + "/**");
-        HttpSecurity h2Console = http.antMatcher(antPattern);
-        h2Console.csrf().disable();
-//        h2Console.httpBasic();
-        h2Console.headers().frameOptions().sameOrigin();
-        // config as you like
-        http.authorizeRequests().anyRequest().permitAll();
+        http.antMatcher(path.endsWith("/") ? path + "**" : path + "/**")
+                .csrf().disable().headers()
+                .frameOptions().sameOrigin()
+                .and()
+                .authorizeRequests().anyRequest().permitAll();
     }
 
 }

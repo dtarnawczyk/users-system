@@ -1,4 +1,4 @@
-package org.customers.system.web.controllers.update;
+package org.customers.system.web.controllers.ui.update;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -6,10 +6,10 @@ import org.customers.system.domain.CustomerEditor;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.service.StorageService;
 import org.customers.system.service.exception.CustomerNotFoundException;
-import org.customers.system.web.config.PictureProperties;
-import org.customers.system.web.controllers.profileForm.ProfileFormDto;
-import org.customers.system.web.controllers.profileForm.ProfileSession;
-import org.customers.system.web.utils.CustomerFormBuilder;
+import org.customers.system.web.config.resource.PictureProperties;
+import org.customers.system.web.controllers.ui.profileForm.ProfileFormDto;
+import org.customers.system.web.controllers.ui.profileForm.ProfileSession;
+import org.customers.system.web.controllers.ui.utils.CustomerFormBuilder;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -97,12 +97,6 @@ public class UpdateCustomerController {
         }
         return "logged";
     }
-
-//    @GetMapping("/logout")
-//    public String logout(HttpSession session){
-//        session.invalidate();
-//        return "login";
-//    }
 
     @PostMapping(value = "/update")
     public String updateCustomer(@Valid @ModelAttribute("profileForm") ProfileFormDto profileForm,

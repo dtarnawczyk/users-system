@@ -1,12 +1,12 @@
-package org.customers.system.web.controllers.create;
+package org.customers.system.web.controllers.ui.create;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.customers.system.domain.CustomerCreator;
 import org.customers.system.domain.model.Customer;
-import org.customers.system.web.controllers.profileForm.ProfileFormDto;
-import org.customers.system.web.controllers.profileForm.ProfileFormValidator;
-import org.customers.system.web.utils.CustomerFormBuilder;
+import org.customers.system.web.controllers.ui.profileForm.ProfileFormDto;
+import org.customers.system.web.controllers.ui.profileForm.ProfileFormValidator;
+import org.customers.system.web.controllers.ui.utils.CustomerFormBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;

@@ -1,4 +1,4 @@
-package org.customers.system.web.config;
+package org.customers.system.web.config.security.api;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -28,7 +28,7 @@ public class ApiSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers((HttpMethod.GET)).hasAnyRole("USER")
+                .antMatchers((HttpMethod.GET)).hasAnyRole("USER", "ADMIN")
                 .antMatchers((HttpMethod.POST)).hasAnyRole("ADMIN")
                 .antMatchers((HttpMethod.PUT)).hasAnyRole("ADMIN")
                 .antMatchers((HttpMethod.DELETE)).hasAnyRole("ADMIN")

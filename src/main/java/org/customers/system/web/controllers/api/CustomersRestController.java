@@ -1,4 +1,4 @@
-package org.customers.system.web.controllers.rest;
+package org.customers.system.web.controllers.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j
 public class CustomersRestController {
@@ -26,14 +25,14 @@ public class CustomersRestController {
     private final CustomerEditor customerEditor;
     private final CustomerCreator customerCreator;
 
-    @GetMapping(value = "/customer/{id}")
+    @GetMapping(ApiEndpoints.CUSTOMERS_ID)
     public ResponseEntity<?> getCustomerById(@PathVariable Long id){
         Optional<Customer> customerOptional = customersService.getCustomerById(id);
         return customerOptional.map(customer -> new ResponseEntity<>(customer, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping(value = "/customer")
+    @GetMapping(ApiEndpoints.CUSTOMERS)
     public ResponseEntity<?> getAllCustomers(){
         List<Customer> users = customersService.getAll();
         if(users.isEmpty()){
@@ -42,18 +41,18 @@ public class CustomersRestController {
         return new ResponseEntity<List<Customer>>(users, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/customer")
+    @PostMapping(ApiEndpoints.CUSTOMERS)
     public ResponseEntity<Void> createCustomer(@RequestBody Customer customer, UriComponentsBuilder ucBuilder) {
         if (customersService.isCustomerExist(customer)) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
         customerCreator.create(customer);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/customer/{id}").buildAndExpand(customer.getId()).toUri());
+        headers.setLocation(ucBuilder.path(ApiEndpoints.CUSTOMERS_ID).buildAndExpand(customer.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/customer/{id}")
+    @PutMapping(ApiEndpoints.CUSTOMERS_ID)
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") long id, @RequestBody Customer customer) {
         try {
             Customer updatedCustomer = customerEditor.updateCustomer(customer);
@@ -63,7 +62,7 @@ public class CustomersRestController {
         }
     }
 
-    @DeleteMapping(value = "/customer/{id}")
+    @DeleteMapping(ApiEndpoints.CUSTOMERS_ID)
     public ResponseEntity<Customer> deleteCustomer(@PathVariable("id") long id) {
         Optional<Customer> customerOptional = customersService.getCustomerById(id);
         if(customerOptional.isPresent()){

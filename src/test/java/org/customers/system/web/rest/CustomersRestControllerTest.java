@@ -9,6 +9,7 @@ import org.customers.system.domain.model.Customer;
 import org.customers.system.domain.model.Role;
 import org.customers.system.web.config.json.date.DateDeserializer;
 import org.customers.system.web.config.json.date.DateSerializer;
+import org.customers.system.web.controllers.api.ApiEndpoints;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,7 +70,7 @@ public class CustomersRestControllerTest {
 
     @Test
     public void shoudlListCustomers() throws Exception {
-        this.mockMvc.perform(get("/api/customer").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get(ApiEndpoints.CUSTOMERS).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -78,7 +79,7 @@ public class CustomersRestControllerTest {
 
     @Test
     public void shoudGetCustomerById() throws Exception {
-        this.mockMvc.perform(get(String.format("/api/customer/%s", testCustomer.getId())).accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get(String.format(ApiEndpoints.CUSTOMERS+"/%s", testCustomer.getId())).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(testCustomer.getId().intValue())));
@@ -88,11 +89,11 @@ public class CustomersRestControllerTest {
     public void shouldCreateCustomer() throws Exception {
         String newCustomersLogin = "newTester";
         String newCustomersEmail = "john@email.org";
-        MvcResult result = this.mockMvc.perform(post("/api/customer")
+        MvcResult result = this.mockMvc.perform(post(ApiEndpoints.CUSTOMERS)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(createTestCustomer(newCustomersLogin, newCustomersEmail))))
                 .andExpect(status().isCreated()).andReturn();
-        assertThat(result.getResponse().getHeader("Location")).contains("/customer/");
+        assertThat(result.getResponse().getHeader("Location")).contains(ApiEndpoints.CUSTOMERS);
         assertTrue(customersRepository.findByLogin(newCustomersLogin).isPresent());
     }
 
@@ -100,7 +101,7 @@ public class CustomersRestControllerTest {
     public void shouldUpdateCustomer() throws Exception {
         String newEmail = "newEmail@box.net";
         testCustomer.setEmail(newEmail);
-        this.mockMvc.perform(put(String.format("/api/customer/%s", testCustomer.getId()))
+        this.mockMvc.perform(put(String.format(ApiEndpoints.CUSTOMERS+"/%s", testCustomer.getId()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(testCustomer)))
                 .andExpect(status().isOk())
@@ -110,7 +111,7 @@ public class CustomersRestControllerTest {
 
     @Test
     public void shouldDeleteCustomer() throws Exception {
-        this.mockMvc.perform(delete(String.format("/api/customer/%s", testCustomer.getId()))
+        this.mockMvc.perform(delete(String.format(ApiEndpoints.CUSTOMERS+"/%s", testCustomer.getId()))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
         assertFalse(customersRepository.findById(testCustomer.getId()).isPresent());

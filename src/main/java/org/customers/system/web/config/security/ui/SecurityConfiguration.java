@@ -1,4 +1,4 @@
-package org.customers.system.web.config;
+package org.customers.system.web.config.security.ui;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
