@@ -3,7 +3,7 @@ package org.customers.system.web.controller;
 import org.customers.system.Application;
 import org.customers.system.domain.CustomersService;
 import org.customers.system.domain.model.Customer;
-import org.customers.system.web.controllers.profileForm.ProfileSession;
+import org.customers.system.web.controllers.ui.profileForm.ProfileSession;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

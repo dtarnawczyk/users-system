@@ -4,6 +4,7 @@ import org.customers.system.Application;
 import org.customers.system.domain.CustomersRepository;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.domain.model.Role;
+import org.customers.system.web.controllers.api.ApiEndpoints;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +72,7 @@ public class Oauth2CustomersRestControllerTest {
 
     @Test
     public void givenNoToken_whenGetSecureRequest_thenUnauthorized() throws Exception {
-        mockMvc.perform(get("/api/customer").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(ApiEndpoints.CUSTOMERS).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -79,7 +80,7 @@ public class Oauth2CustomersRestControllerTest {
     public void givenInvalidRole_whenGetSecureRequest_thenForbidden() throws Exception {
         String accessToken = obtainAccessToken(TEST_USER_LOGIN, TEST_USER_RAW_PASSWORD);
 
-        mockMvc.perform(delete(String.format("/api/customer/%s", testCustomer.getId()))
+        mockMvc.perform(delete(String.format(ApiEndpoints.CUSTOMERS+"/%s", testCustomer.getId()))
                 .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isForbidden());
     }
@@ -88,7 +89,7 @@ public class Oauth2CustomersRestControllerTest {
     public void givenToken_whenGetSecureRequest_thenOk() throws Exception {
         String accessToken = obtainAccessToken(TEST_USER_LOGIN, TEST_USER_RAW_PASSWORD);
 
-        mockMvc.perform(get(String.format("/api/customer/%s", testCustomer.getId()))
+        mockMvc.perform(get(String.format(ApiEndpoints.CUSTOMERS+"/%s", testCustomer.getId()))
                 .header("Authorization", "Bearer " + accessToken)
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -121,14 +122,14 @@ public class Oauth2CustomersRestControllerTest {
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "password");
-        params.add("client_id", clientId);
-        params.add("username", TEST_USER_LOGIN);
-        params.add("password", TEST_USER_RAW_PASSWORD);
+        params.add("client_id", this.clientId);
+        params.add("username", username);
+        params.add("password", password);
 
         ResultActions result
                 = mockMvc.perform(post("/oauth/token")
                 .params(params)
-                .with(httpBasic(clientId,clientSecret))
+                .with(httpBasic(this.clientId, this.clientSecret))
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
