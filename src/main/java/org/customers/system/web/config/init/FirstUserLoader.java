@@ -36,6 +36,8 @@ public class FirstUserLoader implements ApplicationListener<ContextRefreshedEven
 
         }
 
+        creatingAdminCustomer();
+
         Iterable<Customer> users = usersRepository.findAll();
         users.forEach(u -> {
             log.info("User found: " + u.getLogin());
@@ -46,13 +48,27 @@ public class FirstUserLoader implements ApplicationListener<ContextRefreshedEven
         Customer user = new Customer();
         user.setLogin("firstUser");
         user.setFirstName("Tester");
-        user.setPassword(passwordEncoder.encode("test4321"));
+        user.setPassword(passwordEncoder.encode(FIRST_USER_PASSWORD));
         user.setActive(true);
         user.setCgroup("USER");
         user.setEmail("test@email.com");
         user.setCreated(LocalDate.now());
         user.setModified(LocalDate.now());
         user.setRole(Role.USER);
+        return user;
+    }
+
+    private Customer creatingAdminCustomer() {
+        Customer user = new Customer();
+        user.setLogin("admin");
+        user.setFirstName("Tester");
+        user.setPassword(passwordEncoder.encode("password"));
+        user.setActive(true);
+        user.setCgroup("ADMIN");
+        user.setEmail("admin@email.com");
+        user.setCreated(LocalDate.now());
+        user.setModified(LocalDate.now());
+        user.setRole(Role.ADMIN);
         return user;
     }
 }
