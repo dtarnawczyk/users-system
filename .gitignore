@@ -3,6 +3,7 @@ target/
 build/
 .gradle/
 .settings/
+out/
 .project
 .classpath
 .DS_Store
