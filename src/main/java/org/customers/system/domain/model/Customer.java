@@ -1,21 +1,16 @@
 package org.customers.system.domain.model;
 
+import org.customers.system.domain.model.audit.Auditable;
 import org.customers.system.domain.util.Constants;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @Table(name = "CUSTOMERS")
-@EntityListeners(AuditingEntityListener.class)
-public class Customer implements Serializable{
+public class Customer extends Auditable<String> implements Serializable  {
 
     @Id
     @GeneratedValue(generator = Constants.ID_GENERATOR)
@@ -38,20 +33,6 @@ public class Customer implements Serializable{
 
     private boolean active;
     private String cgroup;
-
-    @CreatedDate
-    @Column(name="created_date", nullable = false, updatable = false)
-    private LocalDate created;
-
-    @LastModifiedDate
-    @Column(name="modified_date")
-    private LocalDate modified;
-
-    @CreatedBy
-    private String createdBy;
-
-    @LastModifiedBy
-    private String mmodifiedBy;
 
     private String profileImage;
 
@@ -89,14 +70,6 @@ public class Customer implements Serializable{
 
     public String getCgroup() {
         return cgroup;
-    }
-
-    public LocalDate getCreated() {
-        return created;
-    }
-
-    public LocalDate getModified() {
-        return modified;
     }
 
     public Long getId() {

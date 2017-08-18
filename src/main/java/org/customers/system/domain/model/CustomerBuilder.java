@@ -1,7 +1,5 @@
 package org.customers.system.domain.model;
 
-import java.time.LocalDate;
-
 public class CustomerBuilder {
 
     private String login;
@@ -13,8 +11,6 @@ public class CustomerBuilder {
     private boolean active;
     private String profileImage;
     private String cgroup;
-    private LocalDate created;
-    private LocalDate modified;
     private Role role;
     private Customer customer = null;
 
