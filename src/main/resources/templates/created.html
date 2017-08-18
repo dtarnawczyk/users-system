@@ -9,6 +9,12 @@
 <body>
 <div class="row" layout:fragment="content">
     <h5 class="indigo-text center" th:text="#{successfullyCreated}">Successfully created!</h5>
+
+    <center>
+        <div class="input-field col s12">
+            <a href="/login" th:href="@{login}" th:text="#{loginText}">Login</a>
+        </div>
+    </center>
 </div>
 </body>
 </html>

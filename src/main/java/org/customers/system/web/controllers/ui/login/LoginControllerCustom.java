@@ -67,7 +67,7 @@ public class LoginControllerCustom {
     }
 
     private void saveCustomerInSession(Customer customer) {
-        ProfileFormDto fullProfileForm = CustomerFormBuilder.buildForm(customer);
+        ProfileFormDto fullProfileForm = CustomerFormBuilder.convertToDto(customer);
         getProfileSession().saveProfile(fullProfileForm);
     }
 

@@ -26,7 +26,9 @@ public class Customer implements Serializable{
 
     private String firstName;
     private String lastName;
-    private String address;
+
+    @Embedded
+    private Address address;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -69,7 +71,7 @@ public class Customer implements Serializable{
         return lastName;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
@@ -113,7 +115,7 @@ public class Customer implements Serializable{
         this.lastName = lastName;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -131,14 +133,6 @@ public class Customer implements Serializable{
 
     public void setCgroup(String customerGroup) {
         this.cgroup = customerGroup;
-    }
-
-    public void setCreated(LocalDate created) {
-        this.created = created;
-    }
-
-    public void setModified(LocalDate modified) {
-        this.modified = modified;
     }
 
     public String getProfileImage() {

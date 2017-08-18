@@ -2,7 +2,7 @@ package org.customers.system.service;
 
 import org.customers.system.domain.CustomerCreator;
 import org.customers.system.domain.model.Customer;
-import org.customers.system.domain.model.CustomerFactory;
+import org.customers.system.domain.model.CustomerBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ public class CustomerCreatorTest {
 
     @Before
     public void prepareUser(){
-        testCustomer = new CustomerFactory()
+        testCustomer = new CustomerBuilder()
                 .setLogin("test111")
                 .setFirstName("John")
                 .setLastName("Doe")

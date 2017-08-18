@@ -3,6 +3,7 @@ package org.customers.system.web.config.init;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.customers.system.domain.CustomersRepository;
+import org.customers.system.domain.model.Address;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.domain.model.Role;
 import org.springframework.context.ApplicationListener;
@@ -11,7 +12,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Component
@@ -37,9 +37,7 @@ public class FirstUserLoader implements ApplicationListener<ContextRefreshedEven
         }
 
         Iterable<Customer> users = usersRepository.findAll();
-        users.forEach(u -> {
-            log.info("User found: " + u.getLogin());
-        });
+        users.forEach(u -> log.info("User found: " + u.getLogin()));
     }
 
     private Customer creatingFirstCustomer() {
@@ -50,8 +48,8 @@ public class FirstUserLoader implements ApplicationListener<ContextRefreshedEven
         user.setActive(true);
         user.setCgroup("USER");
         user.setEmail("test@email.com");
-        user.setCreated(LocalDate.now());
-        user.setModified(LocalDate.now());
+        Address address = new Address("Zamkowa", "12-345", "Sosnowiec");
+        user.setAddress(address);
         user.setRole(Role.USER);
         return user;
     }
