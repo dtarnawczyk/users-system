@@ -43,7 +43,7 @@ public class CreateCustomerController {
         if(formHasErrors(result)) {
             return "createNewCustomer";
         } else {
-            Customer customer = CustomerFormBuilder.buildCustomer(profileForm);
+            Customer customer = CustomerFormBuilder.convertToEntity(profileForm);
             if(saveCustomer(customer)) {
                 return "created";
             } else {

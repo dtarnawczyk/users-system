@@ -13,7 +13,9 @@ public class ProfileSession extends ProfileFormDto implements Serializable {
     public void saveProfile(ProfileFormDto profileForm){
         this.login = profileForm.getLogin();
         this.password = profileForm.getPassword();
-        this.address = profileForm.getAddress();
+        this.street = profileForm.getStreet();
+        this.zipcode = profileForm.getZipcode();
+        this.city = profileForm.getCity();
         this.email = profileForm.getEmail();
         this.firstName = profileForm.getFirstName();
         this.lastName = profileForm.getLastName();
@@ -25,7 +27,9 @@ public class ProfileSession extends ProfileFormDto implements Serializable {
         profileForm.setLogin(this.login);
         profileForm.setPassword(this.password);
         profileForm.setEmail(this.email);
-        profileForm.setAddress(this.address);
+        profileForm.setStreet(this.street);
+        profileForm.setZipcode(this.zipcode);
+        profileForm.setCity(this.city);
         profileForm.setFirstName(this.firstName);
         profileForm.setLastName(this.lastName);
         profileForm.setProfileImage(this.profileImage);

@@ -2,12 +2,12 @@ package org.customers.system.domain.model;
 
 import java.time.LocalDate;
 
-public class CustomerFactory {
+public class CustomerBuilder {
 
     private String login;
     private String firstName;
     private String lastName;
-    private String address;
+    private Address address;
     private String email;
     private String password;
     private boolean active;
@@ -18,62 +18,52 @@ public class CustomerFactory {
     private Role role;
     private Customer customer = null;
 
-    public CustomerFactory setLogin(String login){
+    public CustomerBuilder setLogin(String login) {
         this.login = login;
         return this;
     }
 
-    public CustomerFactory setFirstName(String firstName){
+    public CustomerBuilder setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public CustomerFactory setLastName(String lastName){
+    public CustomerBuilder setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
-    public CustomerFactory setAddress(String address){
+    public CustomerBuilder setAddress(Address address) {
         this.address = address;
         return this;
     }
 
-    public CustomerFactory setEmail(String email){
+    public CustomerBuilder setEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public CustomerFactory setPassword(String password){
+    public CustomerBuilder setPassword(String password) {
         this.password = password;
         return this;
     }
 
-    public CustomerFactory setActive(boolean active){
+    public CustomerBuilder setActive(boolean active) {
         this.active = active;
         return this;
     }
 
-    public CustomerFactory setProfileImage(String profileImage){
+    public CustomerBuilder setProfileImage(String profileImage) {
         this.profileImage = profileImage;
         return this;
     }
 
-    public CustomerFactory setCgroup(String customersGroup){
+    public CustomerBuilder setCgroup(String customersGroup) {
         this.cgroup = customersGroup;
         return this;
     }
 
-    public CustomerFactory setCreated(LocalDate created) {
-        this.created = created;
-        return this;
-    }
-
-    public CustomerFactory setModified(LocalDate modified) {
-        this.modified = modified;
-        return this;
-    }
-
-    public CustomerFactory setRole(Role role) {
+    public CustomerBuilder setRole(Role role) {
         this.role = role;
         return this;
     }
@@ -90,8 +80,6 @@ public class CustomerFactory {
         customer.setPassword(password);
         customer.setActive(active);
         customer.setCgroup(cgroup);
-        customer.setCreated(created);
-        customer.setModified(modified);
         customer.setProfileImage(profileImage);
         customer.setRole(role);
         this.customer = customer;

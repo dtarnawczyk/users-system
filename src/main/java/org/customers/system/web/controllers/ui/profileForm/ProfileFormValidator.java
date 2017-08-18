@@ -32,6 +32,7 @@ public class ProfileFormValidator implements Validator {
         validatePasswords(errors, profileForm);
         validateLogin(errors, profileForm);
         validateEmail(errors, profileForm);
+        validateAddress(errors, profileForm);
     }
 
     private void validatePasswords(Errors errors, ProfileFormDto profileForm) {
@@ -68,6 +69,18 @@ public class ProfileFormValidator implements Validator {
 
         if (customersService.getCustomerByEmail(profileForm.getEmail()).isPresent()) {
             errors.rejectValue("email","email.exists", "User with this email already exists");
+        }
+    }
+
+    private void validateAddress(Errors errors, ProfileFormDto profileFormDto) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipcode", "zipcode.empty",
+                "Zipcode is empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "street", "street.empty",
+                "Street is empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "city.empty",
+                "City is empty");
+        if(profileFormDto.getZipcode().length() > 6){
+            errors.rejectValue("zipcode","zipcode.no_match", "Zipcode doesn't match");
         }
     }
 }

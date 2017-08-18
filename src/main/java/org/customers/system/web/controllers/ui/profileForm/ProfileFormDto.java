@@ -28,7 +28,9 @@ public class ProfileFormDto {
 
     protected String lastName;
 
-    protected String address;
+    protected String street;
+    protected String zipcode;
+    protected String city;
 
     protected String profileImage;
 

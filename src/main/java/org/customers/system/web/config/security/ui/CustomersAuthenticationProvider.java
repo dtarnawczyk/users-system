@@ -46,7 +46,7 @@ public class CustomersAuthenticationProvider implements AuthenticationProvider {
 
     private ProfileFormDto getProfileFormWithRawPassword(Customer customer, String password) {
         customer.setPassword(password);
-        return CustomerFormBuilder.buildForm(customer);
+        return CustomerFormBuilder.convertToDto(customer);
     }
 
 }

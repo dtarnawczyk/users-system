@@ -1,7 +1,6 @@
 package org.customers.system.web.config.localFileStorage;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.customers.system.service.StorageService;
 import org.customers.system.web.config.resource.PictureProperties;
 import org.springframework.core.io.FileSystemResource;
@@ -9,7 +8,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 
 @Service
@@ -44,17 +45,40 @@ public class FileStorageService implements StorageService {
     private String storeFileInFileSystem(MultipartFile file, String username) throws IOException {
         if (file.isEmpty()) {
             log.info("Failed to store empty file " + file.getOriginalFilename());
-            throw new IOException();
+            throw new IOException("The file has empty name");
         } else {
-            String orginalFilename = file.getOriginalFilename().isEmpty() ? file.getName() : file.getOriginalFilename(); 
-            String fileName = createFileName(orginalFilename, username);
+            String originalFilename = file.getOriginalFilename().isEmpty() ? file.getName() : file.getOriginalFilename();
+            String fileName = createFileName(originalFilename, username);
             File newFile = new File(this.picturesResource.getFile(), fileName);
-            if(newFile.exists())
-                newFile.delete();
-            newFile.createNewFile();
-            InputStream in = file.getInputStream();
-            OutputStream out = new FileOutputStream(newFile, false);
-            IOUtils.copy(in, out);
+//            if(newFile.exists()) {
+
+            Files.write(newFile.toPath(), file.getBytes());
+
+//            } else {
+//
+//
+//
+//
+//            }
+//
+//
+//
+//            boolean fileCreated = false;
+//            while (!fileCreated) {
+//                try {
+//                    newFile.createNewFile();
+//                    InputStream in = file.getInputStream();
+//                    OutputStream out = new FileOutputStream(newFile, false);
+//                    IOUtils.copy(in, out);
+//                    fileCreated = true;
+//                    in.close();
+//                    out.close();
+//                } catch (IOException exception) {
+//                    log.info("<<<<<<<<<<<<<<<>>>>>>>>>>>>>");
+//                    log.info(exception.getLocalizedMessage());
+//                    continue;
+//                }
+//            }
             return newFile.getName();
         }
     }

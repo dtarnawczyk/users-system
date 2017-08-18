@@ -132,9 +132,9 @@ public class UpdateCustomerController {
     }
 
     private void updateCustomer(ProfileFormDto profileForm) throws CustomerNotFoundException {
-        Customer customer = CustomerFormBuilder.buildCustomer(profileForm);
+        Customer customer = CustomerFormBuilder.convertToEntity(profileForm);
         customerEditor.updateCustomer(customer);
-        getProfileSession().saveProfile(CustomerFormBuilder.buildForm(customer));
+        getProfileSession().saveProfile(CustomerFormBuilder.convertToDto(customer));
     }
 
     private String storeProfilePhoto(MultipartFile photoFile, ProfileFormDto profileForm) throws Exception {

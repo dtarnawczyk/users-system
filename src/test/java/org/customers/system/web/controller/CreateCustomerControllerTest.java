@@ -49,10 +49,11 @@ public class CreateCustomerControllerTest {
     public void whenCreateFormProvidedThenCreateConsumer() throws Exception {
         // given
         ProfileFormDto form = buildTestFormWithEmailAndFirstName("test@test.pl", "tester");
-        Customer customer = CustomerFormBuilder.buildCustomer(form);
+        Customer customer = CustomerFormBuilder.convertToEntity(form);
         when(createService.create(customer)).thenReturn(customer);
 
         // when
+
         mockMvc.perform(post("/createCustomer").accept(MediaType.TEXT_HTML)
                 .param("login", form.getLogin())
                 .param("password", form.getPassword())
@@ -60,7 +61,10 @@ public class CreateCustomerControllerTest {
                 .param("email", form.getEmail())
                 .param("firstName", form.getFirstName())
                 .param("lastName", form.getLastName())
-                .param("address", form.getAddress()))
+                .param("street", form.getStreet())
+                .param("zipcode", form.getZipcode())
+                .param("city", form.getCity())
+        )
                 .andExpect(status().isOk())
                 .andExpect(view().name("created"));
 
@@ -79,7 +83,10 @@ public class CreateCustomerControllerTest {
                 .param("email", "wrong.pl")
                 .param("firstName", "")
                 .param("lastName", "test")
-                .param("address", "address"))
+                .param("street", "street")
+                .param("zipcode", "11111")
+                .param("city", "city")
+        )
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasFieldErrors("profileForm",
                         "email", "password"))
@@ -99,7 +106,10 @@ public class CreateCustomerControllerTest {
                 .param("email", "wrong.pl")
                 .param("firstName", "")
                 .param("lastName", "test")
-                .param("address", "address"))
+                .param("street", "street")
+                .param("zipcode", "11111")
+                .param("city", "city")
+        )
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasFieldErrors("profileForm",
                         "passwordRepeated"))
@@ -118,7 +128,9 @@ public class CreateCustomerControllerTest {
         form.setEmail(email);
         form.setFirstName(firstName);
         form.setLastName("Smith");
-        form.setAddress("Poland");
+        form.setStreet("Zamkowa");
+        form.setZipcode("12345");
+        form.setCity("Sosnowiec");
         return form;
     }
 

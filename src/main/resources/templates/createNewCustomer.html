@@ -85,10 +85,25 @@
 
                 <div class='row margin'>
                     <div class='input-field col s12'>
-                        <input class='validate' type='text' name='address' id='address'
-                               th:field="${profileForm.address}" th:errorclass="invalid"/>
-                        <label for='address' th:text="#{enterYourAddress}">Enter your address</label>
+                        <input class='validate' type='text' name='addressStreet' id='addressStreet'
+                               th:field="${profileForm.street}" th:errorclass="invalid"/>
+                        <label for='addressStreet' th:text="#{enterYourAddressStreet}">Enter the street</label>
+                    </div>
+                </div>
 
+                <div class='row margin'>
+                    <div class='input-field col s12'>
+                        <input class='validate' type='text' name='addressZipcode' id='addressZipcode'
+                               th:field="${profileForm.zipcode}" th:errorclass="invalid"/>
+                        <label for='addressZipcode' th:text="#{enterYourAddressZipcode}">Enter the zipcode</label>
+                    </div>
+                </div>
+
+                <div class='row margin'>
+                    <div class='input-field col s12'>
+                        <input class='validate' type='text' name='addressCity' id='addressCity'
+                               th:field="${profileForm.city}" th:errorclass="invalid"/>
+                        <label for='addressCity' th:text="#{enterYourAddressCity}">Enter the city</label>
                     </div>
                 </div>
 

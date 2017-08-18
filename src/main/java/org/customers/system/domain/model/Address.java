@@ -5,21 +5,26 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 @Embeddable
-class Address {
+public class Address {
 
     @NotNull
     @Column(nullable = false, length = 6)
-    private String zipcode;
+    private final String zipcode;
 
     @NotNull
     @Column(nullable = false)
-    private String street;
+    private final String street;
 
     @NotNull
     @Column(nullable = false)
-    private String city;
+    private final String city;
 
-    public Address() {}
+    @SuppressWarnings("unused")
+    private Address() {
+        this.zipcode = null;
+        this.street = null;
+        this.city = null;
+    }
 
     public Address(String street, String zipcode, String city){
         this.street = street;

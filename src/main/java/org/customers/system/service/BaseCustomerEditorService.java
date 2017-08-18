@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -67,8 +66,7 @@ public class BaseCustomerEditorService implements CustomerEditor {
                     passwordEncoder.matches(customer.getPassword(), foundCustomer.getPassword())) {
                 if (customer.getFirstName() != null && !customer.getFirstName().isEmpty())
                     foundCustomer.setFirstName(customer.getFirstName());
-                foundCustomer.setModified(LocalDate.now());
-                if(customer.getAddress() != null && !customer.getAddress().isEmpty())
+                if (customer.getAddress() != null && customer.getAddress() != null)
                     foundCustomer.setAddress(customer.getAddress());
                 if(customer.getEmail() != null && !customer.getEmail().isEmpty())
                     foundCustomer.setEmail(customer.getEmail());

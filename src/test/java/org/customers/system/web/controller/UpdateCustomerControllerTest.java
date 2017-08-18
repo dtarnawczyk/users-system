@@ -3,6 +3,7 @@ package org.customers.system.web.controller;
 import org.customers.system.Application;
 import org.customers.system.domain.CustomerEditor;
 import org.customers.system.domain.CustomersService;
+import org.customers.system.domain.model.Address;
 import org.customers.system.domain.model.Customer;
 import org.customers.system.service.StorageService;
 import org.customers.system.web.config.resource.PictureProperties;
@@ -126,6 +127,9 @@ public class UpdateCustomerControllerTest {
         profileSession.setLogin(TEST_USER);
         profileSession.setPassword(TEST_PASSWORD);
         profileSession.setEmail("email@test.org");
+        profileSession.setCity("town");
+        profileSession.setZipcode("12-213");
+        profileSession.setStreet("street");
         session.setAttribute("scopedTarget.profileSession", profileSession);
 
         //when
@@ -152,13 +156,15 @@ public class UpdateCustomerControllerTest {
         customer.setFirstName("Tom");
         customer.setLastName("Johnson");
         customer.setEmail("tj@email.com");
-        customer.setAddress("somestreet");
+        Address address = new Address("Krakowska", "14-444", "Warszawa");
+        customer.setAddress(address);
         when(this.customersService.getCustomer(TEST_USER, TEST_PASSWORD)).thenReturn(Optional.of(customer));
 
         //when
         Customer updatedCustomer = new Customer();
         updatedCustomer.setEmail("newtj@email.com");
-        updatedCustomer.setAddress("newaddress");
+        Address newAddress = new Address("Zamkowa", "54-453", "Krakow");
+        updatedCustomer.setAddress(newAddress);
         updatedCustomer.setFirstName("mark");
         updatedCustomer.setLastName("lastname");
         this.mockMvc.perform(fileUpload("/update")
@@ -168,7 +174,9 @@ public class UpdateCustomerControllerTest {
                 .param("email", updatedCustomer.getEmail())
                 .param("firstName", updatedCustomer.getFirstName())
                 .param("lastName", updatedCustomer.getLastName())
-                .param("address", updatedCustomer.getAddress()))
+                .param("street", updatedCustomer.getAddress().getStreet())
+                .param("zipcode", updatedCustomer.getAddress().getZipcode())
+                .param("city", updatedCustomer.getAddress().getCity()))
                 .andExpect(status().isFound())
                 .andExpect(header().string("Location", "logged"));
 

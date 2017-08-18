@@ -3,8 +3,9 @@ package org.customers.system.service;
 import org.customers.system.domain.CustomerCreator;
 import org.customers.system.domain.CustomerEditor;
 import org.customers.system.domain.CustomersService;
+import org.customers.system.domain.model.Address;
 import org.customers.system.domain.model.Customer;
-import org.customers.system.domain.model.CustomerFactory;
+import org.customers.system.domain.model.CustomerBuilder;
 import org.customers.system.domain.model.Role;
 import org.customers.system.service.exception.CustomerNotFoundException;
 import org.junit.After;
@@ -42,7 +43,8 @@ public class CustomerEditorTest {
 
     @Before
     public void createTestUser() {
-        testCustomer = new CustomerFactory()
+        Address address = new Address("Krakowska", "12-345", "Warszawa");
+        testCustomer = new CustomerBuilder()
                 .setLogin(TEST_USER)
                 .setFirstName("John")
                 .setLastName("Doe")
@@ -52,6 +54,7 @@ public class CustomerEditorTest {
                 .setProfileImage("image")
                 .setCgroup("admins")
                 .setRole(Role.ADMIN)
+                .setAddress(address)
                 .createCustomer();
         customerCreatorService.create(testCustomer);
     }
@@ -75,6 +78,8 @@ public class CustomerEditorTest {
         editedCustomer.setProfileImage("someImage2");
         editedCustomer.setCgroup("commons");
         editedCustomer.setRole(Role.USER);
+        Address address = new Address("Zamkowa", "12-345", "Sosnowiec");
+        editedCustomer.setAddress(address);
 
         //when
         Customer afterEditCustomer = editorServive.updateCustomer(editedCustomer);

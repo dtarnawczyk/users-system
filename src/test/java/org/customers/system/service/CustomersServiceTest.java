@@ -1,8 +1,9 @@
 package org.customers.system.service;
 
 import org.customers.system.domain.CustomersService;
+import org.customers.system.domain.model.Address;
 import org.customers.system.domain.model.Customer;
-import org.customers.system.domain.model.CustomerFactory;
+import org.customers.system.domain.model.CustomerBuilder;
 import org.customers.system.domain.model.Role;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,14 +43,16 @@ public class CustomersServiceTest {
     @Test
     public void shouldFindGivenUser(){
         // given
+        Address address = new Address("Zamkowa", "12-345", "Sosnowiec");
         String rawPassword = "test123";
-        Customer testCustomer = new CustomerFactory()
+        Customer testCustomer = new CustomerBuilder()
                 .setLogin("test111")
                 .setFirstName("John")
                 .setLastName("Doe")
                 .setActive(true)
                 .setEmail("email@server.com")
                 .setPassword(passwordEncoder.encode(rawPassword))
+                .setAddress(address)
                 .setRole(Role.USER)
                 .createCustomer();
         Customer createdCustomer = this.entityManager.persist(testCustomer);
