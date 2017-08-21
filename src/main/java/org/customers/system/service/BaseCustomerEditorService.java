@@ -80,7 +80,7 @@ public class BaseCustomerEditorService implements CustomerEditor {
                     foundCustomer.setActive(customer.isActive());
                 if(customer.getRole() != foundCustomer.getRole())
                     foundCustomer.setRole(customer.getRole());
-                return repository.save(foundCustomer);
+                return foundCustomer;
             }
         }
         throw new CustomerNotFoundException("User not found");

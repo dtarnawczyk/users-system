@@ -43,4 +43,24 @@ public class Address {
     public String getCity() {
         return city;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address)) return false;
+
+        Address address = (Address) o;
+
+        if (!zipcode.equals(address.zipcode)) return false;
+        if (!street.equals(address.street)) return false;
+        return city.equals(address.city);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = zipcode.hashCode();
+        result = 31 * result + street.hashCode();
+        result = 31 * result + city.hashCode();
+        return result;
+    }
 }
